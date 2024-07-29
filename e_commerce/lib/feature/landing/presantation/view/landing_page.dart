@@ -1,0 +1,52 @@
+import 'package:bloc/bloc.dart';
+import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
+import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
+import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/feature/landing/presantation/mixin/landing_mixin.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+class LandingPage extends StatefulWidget {
+  const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> with LandingPageMixin {
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is AllMealsLoaded && !navigatedNotifier.value) {
+          navigatedNotifier.value = true;
+          context.push('/onboarding_page');
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF53B175),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/images/landing.svg',
+                ),
+              ),
+            ),
+            ValueListenableBuilder<bool>(
+              valueListenable: navigatedNotifier,
+              builder: (context, navigated, child) {
+                return Container();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
