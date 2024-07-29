@@ -1,7 +1,16 @@
+import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/explore/presantation/view/explore_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 mixin ExploreMixin on State<ExplorePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<ExploreBloc>().add(FetchExploreCategory());
+  }
+
   final Map<String, String> optionImages = {
     'Vegetarian': 'assets/images/vegetarian.png',
     'Side': 'assets/images/side.png',

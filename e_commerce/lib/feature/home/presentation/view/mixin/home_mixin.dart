@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
@@ -13,6 +14,7 @@ mixin HomeMixin on State<HomePage> {
   void initState() {
     super.initState();
     _generateRandomIndices();
+    context.read<ExploreBloc>().add(FetchExploreCategory());
   }
 
   final hiveManager = HiveDatabaseManager();

@@ -15,7 +15,7 @@ class HomePageHeader extends StatelessWidget {
     return Column(
       children: [
         if (mediaQuery.size.height < 700)
-          const SizedBox()
+          const VerticalSpace.small()
         else
           const VerticalSpace.medium(),
         SvgPicture.asset(

@@ -23,6 +23,15 @@ class ApiService {
     return mealCategoryName;
   }
 
+  Future<List<MealCategory>> fetcRandomMeal() async {
+    final response = await getRequest('/list.php?c=list');
+
+    final mealCategoryModel = MealCategoryModel.fromJson(response);
+    final mealCategoryName = mealCategoryModel.meals;
+
+    return mealCategoryName;
+  }
+
   Future<Map<String, dynamic>> getRequest(String endpoint) async {
     final response = await http.get(Uri.parse('$baseUrl$endpoint'));
 

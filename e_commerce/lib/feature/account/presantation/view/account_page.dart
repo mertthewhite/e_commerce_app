@@ -41,11 +41,7 @@ class _AccountPageState extends State<AccountPage> {
         email: 'Imshuvo97@gmail.com',
         avatarPath: 'assets/images/Rectangle 82.png',
       ),
-      body: Column(
-        children: [
-          AccountBody(items: items, itemsName: itemsName),
-        ],
-      ),
+      body: AccountBody(items: items, itemsName: itemsName),
     );
   }
 }

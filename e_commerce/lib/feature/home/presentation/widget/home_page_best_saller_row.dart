@@ -50,15 +50,16 @@ class HomePageBestSallerRow extends StatelessWidget {
         ),
         const VerticalSpace.small(),
         SizedBox(
-          height: context.dynamicHeight(0.35),
+          height: context.dynamicHeight(0.36),
           child: GridView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisSpacing: 14,
               crossAxisCount: 1,
               mainAxisSpacing: 16,
-              childAspectRatio: 1.5,
+              childAspectRatio:
+                  MediaQuery.of(context).size.height < 730 ? 1.5 : 1.78,
             ),
             itemCount: state.meals.length > 10 ? 5 : state.meals.length,
             itemBuilder: (context, index) {

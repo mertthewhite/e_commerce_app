@@ -12,6 +12,7 @@ mixin LandingPageMixin on State<LandingPage> {
     BlocProvider.of<HomeBloc>(context).add(FetchAllMeals());
     BlocProvider.of<ExploreBloc>(context).add(FetchExploreCategory());
     context.read<FavouriteBloc>().add(LoadFavouritesEvent());
+    context.read<ExploreBloc>().add(FetchExploreCategory());
   }
 
   final ValueNotifier<bool> navigatedNotifier = ValueNotifier<bool>(false);

@@ -36,6 +36,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
         backgroundColor: const Color(0xffF2F3F2),
         body: SingleChildScrollView(
@@ -45,6 +46,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             child: Column(
               children: [
+                mediaQuery.size.height > 800
+                    ? VerticalSpace.medium()
+                    : VerticalSpace.small(),
                 VerticalSpace.small(),
                 Container(
                   child: Padding(

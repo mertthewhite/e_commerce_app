@@ -20,7 +20,6 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'e_commerce',
