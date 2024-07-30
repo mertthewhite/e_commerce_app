@@ -64,13 +64,15 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
               ),
               Row(
                 children: [
-                  Text(
-                    widget.meal.strMeasure6 ?? '',
-                    style: const TextStyle(
-                      color: Color(0xFF7C7C7C),
-                      fontFamily: "Gilroy-Medium",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
+                  Flexible(
+                    child: Text(
+                      widget.meal.strMeasure6 ?? '',
+                      style: const TextStyle(
+                        color: Color(0xFF7C7C7C),
+                        fontFamily: "Gilroy-Medium",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                   const Text(

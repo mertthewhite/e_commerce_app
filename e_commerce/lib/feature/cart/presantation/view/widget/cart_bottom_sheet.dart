@@ -87,8 +87,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 text: "Place Order",
                 onTap: () {
                   context.push("/cart_page_accepted");
-                  context.read<CartBloc>().add(ClearCartEvent(
-                      context.read<CartBloc>().state.product.first));
+                  context.read<CartBloc>().add(ClearHiveCartEvent());
                 },
               ),
             ],

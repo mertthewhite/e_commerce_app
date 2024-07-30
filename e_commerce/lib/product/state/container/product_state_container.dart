@@ -4,6 +4,7 @@ import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/data/remote/product_remote_datasource.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/feature/home/presentation/bloc/search_bloc.dart';
 import 'package:e_commerce/product/context/bottom_nav_context.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:e_commerce/product/router/app_router.dart';
@@ -25,6 +26,9 @@ abstract class CustomLocator {
           ))
       ..registerFactory(() => CartBloc())
       ..registerFactory(() => FavouriteBloc())
+      ..registerFactory(() => SearchBloc(
+            _instance(),
+          ))
       ..registerLazySingleton(() => AppRouter())
       ..registerLazySingleton(() => HiveDatabaseManager())
       ..registerFactory(() => GeneralRepository(

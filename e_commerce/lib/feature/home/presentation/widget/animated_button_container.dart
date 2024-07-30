@@ -65,13 +65,15 @@ class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
             ),
             Row(
               children: [
-                Text(
-                  widget.firstMeasure ?? '',
-                  style: const TextStyle(
-                    color: Color(0xFF7C7C7C),
-                    fontFamily: "Gilroy-Medium",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                Flexible(
+                  child: Text(
+                    widget.firstMeasure ?? '',
+                    style: const TextStyle(
+                      color: Color(0xFF7C7C7C),
+                      fontFamily: "Gilroy-Medium",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
                 const Text(

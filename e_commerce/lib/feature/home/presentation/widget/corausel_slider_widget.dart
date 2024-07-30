@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/custom_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +15,11 @@ class CorauselSliderWidget extends StatelessWidget {
   final CarouselController controller;
 
   List items = [
-    "assets/images/banner2.png",
-    "assets/images/banner3.png",
-    "assets/images/banner.png",
-    "assets/images/banner4.png",
-    "assets/images/banner.png",
+    Assets.images.banner2.path,
+    Assets.images.banner3.path,
+    Assets.images.banner4.path,
+    Assets.images.banner2.path,
+    Assets.images.banner3.path,
   ];
 
   @override

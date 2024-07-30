@@ -52,9 +52,7 @@ class OnboardingBody extends StatelessWidget {
           CustomGeneralAppButton(
               buttonText: "Get Started",
               onTap: () {
-                isUserLogin
-                    ? context.push('/home_page')
-                    : context.push('/login_page');
+                context.push('/home_page');
               }),
           VerticalSpace.large(),
         ],

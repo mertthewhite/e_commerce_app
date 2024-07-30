@@ -13,7 +13,7 @@ class HomePageSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        GoRouter.of(context).push('/meal_search_page');
+        GoRouter.of(context).push('/search_page');
       },
       child: Container(
         height: context.dynamicHeight(0.08),

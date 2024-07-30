@@ -20,7 +20,7 @@ final class ExploreState extends Equatable {
         mealCategoryModel,
       ];
 
-  ExploreState copyWith({categories, status, errorMessage, mealCategoryModel}) {
+  ExploreState copyWith({status, errorMessage, mealCategoryModel}) {
     return ExploreState(
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,

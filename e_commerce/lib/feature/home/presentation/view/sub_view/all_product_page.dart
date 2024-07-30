@@ -245,13 +245,15 @@ class AllProductInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          meal.strMeasure6 ?? '',
-          style: const TextStyle(
-            color: Color(0xFF7C7C7C),
-            fontFamily: "Gilroy-Medium",
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
+        Flexible(
+          child: Text(
+            meal.strMeasure6 ?? '',
+            style: const TextStyle(
+              color: Color(0xFF7C7C7C),
+              fontFamily: "Gilroy-Medium",
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
           ),
         ),
         const Text(

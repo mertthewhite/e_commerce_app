@@ -1,4 +1,5 @@
 import 'package:e_commerce/feature/account/presantation/view/account_page.dart';
+import 'package:e_commerce/feature/home/presentation/view/sub_view/search_page.dart';
 import 'package:e_commerce/feature/cart/presantation/view/cart_page.dart';
 import 'package:e_commerce/feature/bottom_nav/view/bottom_nav_page.dart';
 import 'package:e_commerce/feature/cart/presantation/view/subView/cart_page_accepted.dart';
@@ -163,6 +164,29 @@ class AppRouter {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: MealSearchPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.fastEaseInToSlowEaseOut;
+
+              var tween = Tween(begin: begin, end: end);
+              var curvedAnimation = CurvedAnimation(
+                parent: animation,
+                curve: curve,
+              );
+              var offsetAnimation = tween.animate(curvedAnimation);
+
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: '/search_page',
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: SearchPage(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               const begin = Offset(0.0, 1.0);

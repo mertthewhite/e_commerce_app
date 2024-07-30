@@ -14,17 +14,25 @@ class ApiService {
     return meals;
   }
 
+  Future<List<MealModel>> fetchSearchMeals(String endpoint2) async {
+    final response = await getRequest('/search.php?s=$endpoint2');
+    final meals = (response['meals'] as List)
+        .map((mealJson) => MealModel.fromJson(mealJson))
+        .toList();
+    return meals;
+  }
+
   Future<List<MealCategory>> fetchMealCategoryName() async {
     final response = await getRequest('/list.php?c=list');
-
+    print(response);
     final mealCategoryModel = MealCategoryModel.fromJson(response);
     final mealCategoryName = mealCategoryModel.meals;
-
+    print(mealCategoryName);
     return mealCategoryName;
   }
 
-  Future<List<MealCategory>> fetcRandomMeal() async {
-    final response = await getRequest('/list.php?c=list');
+  Future<List<MealCategory>> fetchFilterCategoryMeal(String endpoint2) async {
+    final response = await getRequest('/filter.php?i=$endpoint2');
 
     final mealCategoryModel = MealCategoryModel.fromJson(response);
     final mealCategoryName = mealCategoryModel.meals;
@@ -60,6 +68,24 @@ class GeneralRepository {
   Future<List<MealCategory>> fetchMealCategorynName() async {
     try {
       return await apiService.fetchMealCategoryName();
+    } catch (e) {
+      print('Error fetching all meals: $e');
+      return [];
+    }
+  }
+
+  Future<List<MealCategory>> fetchFilterCategoryMeal(String endpoint2) async {
+    try {
+      return await apiService.fetchFilterCategoryMeal(endpoint2);
+    } catch (e) {
+      print('Error fetching all meals: $e');
+      return [];
+    }
+  }
+
+  Future<List<MealModel>> fetchSearchMeals(String endpoint2) async {
+    try {
+      return await apiService.fetchSearchMeals(endpoint2);
     } catch (e) {
       print('Error fetching all meals: $e');
       return [];

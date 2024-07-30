@@ -17,7 +17,7 @@ class ExploreHeaderWidget extends StatelessWidget {
         InkWell(
             child: ExplorePageSearchBar(),
             onTap: () {
-              context.push('/explore_meal_search_page');
+              context.push('/search_page');
             }),
       ],
     );

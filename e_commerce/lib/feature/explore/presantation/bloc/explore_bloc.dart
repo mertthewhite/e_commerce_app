@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce/feature/explore/data/model/category_model.dart';
 import 'package:e_commerce/feature/home/data/models/category/category_model.dart';
 import 'package:e_commerce/feature/home/data/remote/product_remote_datasource.dart';
 import 'package:equatable/equatable.dart';
@@ -17,16 +16,14 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       FetchExploreCategory event, Emitter<ExploreState> emit) async {
     emit(CategoryLoading());
     try {
-      print('Fetching category meals');
       final mealsCategoryName = await repository.fetchMealCategorynName();
       if (mealsCategoryName.isEmpty) {
-        print('No meals category found');
         emit(CategoryError('No meals category found.'));
       } else {
-        print('Meals category found');
         emit(CategoryLoaded(
           mealCategoryModel: mealsCategoryName,
         ));
+        print(mealsCategoryName);
         state.copyWith(mealCategoryModel: mealsCategoryName);
       }
     } catch (e) {

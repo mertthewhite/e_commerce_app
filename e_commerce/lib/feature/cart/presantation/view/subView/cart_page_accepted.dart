@@ -55,8 +55,7 @@ class _CartPageAcceptedState extends State<CartPageAccepted> {
             CustomGeneralAppButton(
               buttonText: "Back to Home",
               onTap: () {
-                context.pop();
-                context.pop();
+                context.go('/home_page');
               },
               textColor: const Color(0xFF000000),
               color: Colors.white,

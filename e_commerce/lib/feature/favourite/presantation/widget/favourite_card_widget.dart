@@ -43,13 +43,24 @@ class FavouriteCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        favouriteMeal[index].strIngredient2.toString(),
-                        style: context.textTheme.headlineMedium?.copyWith(
-                          color: const Color(0xFF000000),
-                          fontFamily: "Gilroy",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                      Container(
+                        width: context.dynamicWidth(0.4),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                overflow: TextOverflow.ellipsis,
+                                favouriteMeal[index].strIngredient2.toString(),
+                                style:
+                                    context.textTheme.headlineMedium?.copyWith(
+                                  color: const Color(0xFF000000),
+                                  fontFamily: "Gilroy",
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -59,15 +70,17 @@ class FavouriteCard extends StatelessWidget {
                         width: context.dynamicWidth(0.4),
                         child: Row(
                           children: [
-                            Text(
-                              favouriteMeal[index].strMeasure6 ?? '',
-                              style: const TextStyle(
-                                color: Color(0xFF7C7C7C),
-                                fontFamily: "Gilroy",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
+                            Flexible(
+                              child: Text(
+                                favouriteMeal[index].strMeasure6 ?? '',
+                                style: const TextStyle(
+                                  color: Color(0xFF7C7C7C),
+                                  fontFamily: "Gilroy",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             const Text(
                               ",",
@@ -79,15 +92,18 @@ class FavouriteCard extends StatelessWidget {
                               ),
                             ),
                             Flexible(
-                              child: Text(
-                                favouriteMeal[index].strMeasure2 ?? '',
-                                style:
-                                    context.textTheme.headlineLarge?.copyWith(
+                              child: Container(
+                                child: Text(
                                   overflow: TextOverflow.ellipsis,
-                                  color: const Color(0xFF7C7C7C),
-                                  fontFamily: "Gilroy-Medium",
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12,
+                                  favouriteMeal[index].strMeasure2 ?? '',
+                                  style:
+                                      context.textTheme.headlineLarge?.copyWith(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: const Color(0xFF7C7C7C),
+                                    fontFamily: "Gilroy-Medium",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
                             ),

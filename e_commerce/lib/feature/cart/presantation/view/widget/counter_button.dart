@@ -90,45 +90,64 @@ class CartProductDetail extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          meal.strIngredient2 ?? 'Unknown Ingredient',
-          style: const TextStyle(
-            color: Color(0xFF181725),
-            fontFamily: "Gilroy-Bold",
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
+        Container(
+          width: context.dynamicWidth(0.4),
+          child: Row(
+            children: [
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  meal.strIngredient2.toString(),
+                  style: context.textTheme.headlineMedium?.copyWith(
+                    color: const Color(0xFF000000),
+                    fontFamily: "Gilroy",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        Row(
-          children: [
-            Text(
-              meal.strMeasure6 ?? 'Unknown Measure',
-              style: const TextStyle(
-                color: Color(0xFF7C7C7C),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
+        Container(
+          width: context.dynamicWidth(0.4),
+          child: Row(
+            children: [
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  meal.strMeasure6 ?? 'Unknown Measure',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 50, 45, 45),
+                    fontFamily: "Gilroy",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                  ),
+                ),
               ),
-            ),
-            const Text(
-              ",",
-              style: TextStyle(
-                color: Color(0xFF7C7C7C),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
+              const Text(
+                ",",
+                style: TextStyle(
+                  color: Color(0xFF7C7C7C),
+                  fontFamily: "Gilroy",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
               ),
-            ),
-            Text(
-              meal.strMeasure2 ?? 'Unknown Measure',
-              style: context.textTheme.headlineMedium?.copyWith(
-                color: const Color(0xFF7C7C7C),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  meal.strMeasure2 ?? 'Unknown Measure',
+                  style: context.textTheme.headlineMedium?.copyWith(
+                    color: const Color(0xFF7C7C7C),
+                    fontFamily: "Gilroy",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

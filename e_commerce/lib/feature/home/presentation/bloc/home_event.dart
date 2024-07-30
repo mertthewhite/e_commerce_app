@@ -139,3 +139,27 @@ class FetchCategory extends HomeEvent {
   @override
   List<Object> get props => [];
 }
+
+class FetchFilteCategoryMeals extends HomeEvent {
+  final String endpoint2;
+
+  FetchFilteCategoryMeals({required this.endpoint2});
+  @override
+  List<Object> get props => [
+        endpoint2,
+      ];
+}
+
+final class FilterCategoryLoading extends HomeState {
+  @override
+  List<Object> get props => [];
+}
+
+final class FilterCategoryLoaded extends HomeState {
+  final List<MealCategory> mealfiltercategory;
+
+  FilterCategoryLoaded({required this.mealfiltercategory});
+
+  @override
+  List<Object> get props => [mealCategoryModel];
+}

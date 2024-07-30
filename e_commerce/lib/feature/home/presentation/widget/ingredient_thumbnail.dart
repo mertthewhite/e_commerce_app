@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IngredientThumbnail extends StatelessWidget {
   final String ingredient;
@@ -8,8 +12,13 @@ class IngredientThumbnail extends StatelessWidget {
   final bool bigImage;
   final bool cart;
 
+  final int? index;
+
   IngredientThumbnail(
-      {required this.ingredient, required this.bigImage, required this.cart});
+      {required this.ingredient,
+      required this.bigImage,
+      required this.cart,
+      this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +27,24 @@ class IngredientThumbnail extends StatelessWidget {
 
     String largeImageUrl =
         "https://www.themealdb.com/images/ingredients/$ingredient.png";
+
+    List<String> image = [
+      'assets/images/banner.png',
+      'assets/images/seafood.png',
+      'assets/images/banner.png',
+      'assets/images/dessert.png',
+      'assets/images/chicken.png',
+      'assets/images/desert.jpeg',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+      'assets/images/seafood.png',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+      'assets/images/chicken.png',
+    ];
 
     return Column(
       children: [
@@ -33,7 +60,9 @@ class IngredientThumbnail extends StatelessWidget {
               imageUrl: bigImage ? largeImageUrl : smallImageUrl,
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Image.asset(
-                    'assets/images/chicken.png',
+                    index == null
+                        ? image[Random().nextInt(image.length)]
+                        : image[index!],
                     width: 100,
                     height: 100,
                   )),

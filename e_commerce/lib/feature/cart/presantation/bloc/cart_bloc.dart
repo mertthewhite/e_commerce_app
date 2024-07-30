@@ -94,12 +94,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) async {
     try {
       emit(state.copyWith(status: ViewStatus.loading));
-      final meal = event.product;
 
-      final newProduct = List<MealModel>.from(state.product);
-      newProduct.removeWhere((m) => m.idMeal == meal.idMeal);
-
-      emit(state.copyWith(status: ViewStatus.success, product: newProduct));
+      emit(state.copyWith(status: ViewStatus.success, product: []));
     } on Failure catch (e) {
       emit(state.copyWith(status: ViewStatus.failure, failure: e));
     }

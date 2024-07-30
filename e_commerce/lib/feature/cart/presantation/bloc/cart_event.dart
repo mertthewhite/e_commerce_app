@@ -35,11 +35,10 @@ class RemoveHiveFromCartEvent extends CartEvent {
 }
 
 class ClearHiveCartEvent extends CartEvent {
-  final MealModel meal;
-  const ClearHiveCartEvent(this.meal);
+  const ClearHiveCartEvent();
 
   @override
-  List<Object> get props => [meal];
+  List<Object> get props => [];
 }
 
 class RemoveFromCartEvent extends CartEvent {
@@ -52,12 +51,8 @@ class RemoveFromCartEvent extends CartEvent {
 }
 
 class ClearCartEvent extends CartEvent {
-  final MealModel product;
-
-  const ClearCartEvent(this.product);
-
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [];
 }
 
 class LoadCartItemsEvent extends CartEvent {

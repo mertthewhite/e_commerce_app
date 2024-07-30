@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/home/data/models/category/category_model.dart';
@@ -35,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _updateIndex(emit, event);
     });
     on<FetchCategory>(_onFecthCategory);
+    on<FetchFilteCategoryMeals>(_onFetcFilterCategory);
   }
 
   Future<void> _onFetchAllMeals(
@@ -44,10 +46,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       print('Fetching meals');
       final meals = await repository.fetchAllMeals();
       if (meals.isEmpty) {
-        print('No meals found');
         emit(HomeError('No meals found.'));
       } else {
-        print('Meals found');
         emit(AllMealsLoaded(meals));
       }
     } catch (e) {
@@ -63,17 +63,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       print('Fetching category meals');
       final mealsCategoryName = await repository.fetchMealCategorynName();
       if (mealsCategoryName.isEmpty) {
-        print('No meals category found');
         emit(CategoryError('No meals category found.'));
       } else {
-        print('Meals category found');
         emit(CategoryLoaded(
           mealCategoryModel: mealsCategoryName,
         ));
         state.copyWith(mealCategoryModel: mealsCategoryName);
       }
     } catch (e) {
-      print('Error fetching category meals');
       emit(CategoryError(e.toString()));
     }
   }
@@ -103,7 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   void _searchQueryChanged(SearchQueryChanged event, Emitter<HomeState> emit) {
-    emit(state.copyWith(searchQuery: event.query));
+    emit(state.copyWith(searchQuery: event.query, meals: []));
   }
 
   void _updateFAllProducFilter(
@@ -121,5 +118,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _updateIndex(Emitter<HomeState> emit, UpdateClearIndex event) {
     emit(state.copyWith(index: 0));
+  }
+
+  Future<void> _onFetcFilterCategory(
+      FetchFilteCategoryMeals event, Emitter<HomeState> emit) async {
+    emit(FilterCategoryLoading());
+    try {
+      print('Fetching Filter');
+      final meal = await repository.fetchFilterCategoryMeal(
+        event.endpoint2,
+      );
+      if (meal.isEmpty) {
+        emit(HomeError('No meals found.'));
+      } else {
+        emit(FilterCategoryLoaded(
+          mealfiltercategory: meal,
+        ));
+      }
+    } catch (e) {
+      emit(HomeError(e.toString()));
+    }
   }
 }

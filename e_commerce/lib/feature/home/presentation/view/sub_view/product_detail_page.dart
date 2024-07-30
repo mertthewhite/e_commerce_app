@@ -201,13 +201,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         Row(
           children: [
-            Text(
-              widget.selectedProduct.strMeasure6 ?? '',
-              style: context.textTheme.headlineLarge?.copyWith(
-                color: const Color(0xFF7C7C7C),
-                fontFamily: "Gilroy-Medium",
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
+            Flexible(
+              child: Text(
+                widget.selectedProduct.strMeasure6 ?? '',
+                style: context.textTheme.headlineLarge?.copyWith(
+                  color: const Color(0xFF7C7C7C),
+                  fontFamily: "Gilroy-Medium",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
               ),
             ),
             Text(
