@@ -20,12 +20,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<RatingStars>((event, emit) {
       ratingStars(event, emit, event.ratingStars);
     });
-    on<SearchQueryChanged>((event, emit) {
-      _searchQueryChanged(event, emit);
-    });
-    on<FilterMealsEvent>((event, emit) {
-      _updateFAllProducFilter(event, emit);
-    });
+    on<SearchQueryChanged>(_searchQueryChanged);
+    on<FilterMealsEvent>(_updateFAllProducFilter);
     on<UpdatePlusIndex>((event, emit) {
       _updatePlusIndex(emit, event);
     });

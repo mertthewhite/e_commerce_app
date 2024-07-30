@@ -6,6 +6,7 @@ import 'package:e_commerce/product/database/hive/constants/hive_database_constan
 import 'package:equatable/equatable.dart';
 import 'package:e_commerce/product/errors/failures/failures.dart';
 import 'package:e_commerce/product/utility/enums/view_status.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'cart_event.dart';
@@ -20,41 +21,40 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<LoadCartItemsEvent>(_onLoadCartItems);
     on<TotalPriceUpdatedState>(_onTotalPrice);
     on<AddToHiveCartEvent>((event, emit) {
-      final newList = List<MealModel>.from(state.product)..add(event.product);
-      cartBox.add(event.product);
-      emit(CartState(product: newList));
+      addMealToCart(event.product, this, cartBox);
     });
-    on<RemoveHiveFromCartEvent>((event, emit) {
-      final currentProducts = List<MealModel>.from(state.product);
-
-      currentProducts.removeWhere((meal) => meal.idMeal == event.meal.idMeal);
-
-      final mealsToRemove = cartBox.values
-          .where((meal) => meal.idMeal == event.meal.idMeal)
-          .toList();
-
-      for (var meal in mealsToRemove) {
-        final index = cartBox.values.toList().indexOf(meal);
-        if (index != -1) {
-          cartBox.deleteAt(index);
-        }
-      }
-
-      emit(
-          state.copyWith(status: ViewStatus.success, product: currentProducts));
-    });
-
     on<ClearHiveCartEvent>((event, emit) {
-      cartBox.clear();
-      emit(CartState(product: []));
+      clearCart(cartBox, this);
     });
+    on<RemoveHiveFromCartEvent>((event, emit) async {
+      await removeMealFromCart(event.meal, this, cartBox);
+    });
+  }
+
+  Future<void> removeMealFromCart(
+      MealModel meal, CartBloc bloc, Box cartBox) async {
+    final currentProducts = List<MealModel>.from(bloc.state.product);
+
+    currentProducts.removeWhere((m) => m.idMeal == meal.idMeal);
+    final mealsToRemove =
+        cartBox.values.where((m) => m.idMeal == meal.idMeal).toList();
+
+    for (var mealToRemove in mealsToRemove) {
+      final index = cartBox.values.toList().indexOf(mealToRemove);
+      if (index != -1) {
+        await cartBox.deleteAt(index);
+      }
+    }
+
+    bloc.emit(bloc.state
+        .copyWith(status: ViewStatus.success, product: currentProducts));
   }
 
   Future<void> _onAddToCart(
     AddToCartEvent event,
     Emitter<CartState> emit,
   ) async {
-    final List<MealModel> product = [];
+    final product = <MealModel>[];
     try {
       emit(state.copyWith(status: ViewStatus.loading));
       final productEvent = event.product;
@@ -67,6 +67,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } on Failure catch (e) {
       emit(state.copyWith(status: ViewStatus.failure, failure: e));
     }
+  }
+
+  void clearCart(Box cartBox, CartBloc bloc) {
+    cartBox.clear();
+
+    bloc.emit(CartState(product: []));
   }
 
   Future<void> _onRemoveFromCart(
@@ -108,7 +114,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       emit(state.copyWith(status: ViewStatus.loading));
       final product = event.product;
-      print("Loaded products: $product");
+      if (kDebugMode) {
+        print("Loaded products: $product");
+      }
       emit(state.copyWith(status: ViewStatus.success, product: product));
     } on Failure catch (e) {
       print("Error loading cart items: $e");
@@ -118,5 +126,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _onTotalPrice(TotalPriceUpdatedState event, Emitter<CartState> emit) {
     emit(state.copyWith(totalPrice: event.totalPrice));
+  }
+
+  void addMealToCart(MealModel meal, CartBloc bloc, Box cartBox) {
+    final newList = List<MealModel>.from(bloc.state.product)..add(meal);
+
+    cartBox.add(meal);
+
+    bloc.emit(CartState(product: newList));
   }
 }

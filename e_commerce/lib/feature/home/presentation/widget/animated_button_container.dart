@@ -67,6 +67,7 @@ class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
               children: [
                 Flexible(
                   child: Text(
+                    overflow: TextOverflow.ellipsis,
                     widget.firstMeasure ?? '',
                     style: const TextStyle(
                       color: Color(0xFF7C7C7C),

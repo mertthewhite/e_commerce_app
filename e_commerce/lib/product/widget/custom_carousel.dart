@@ -31,7 +31,7 @@ class CarouselSliderWidget extends StatelessWidget {
         viewportFraction: 1,
         autoPlay: autoPlay,
         onPageChanged: onPageChanged,
-        aspectRatio: 2.32,
+        aspectRatio: 2.78,
       ),
     );
   }

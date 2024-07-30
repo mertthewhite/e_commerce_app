@@ -66,6 +66,7 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
                 children: [
                   Flexible(
                     child: Text(
+                      overflow: TextOverflow.ellipsis,
                       widget.meal.strMeasure6 ?? '',
                       style: const TextStyle(
                         color: Color(0xFF7C7C7C),
@@ -86,6 +87,7 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
                   ),
                   Flexible(
                     child: Text(
+                      overflow: TextOverflow.ellipsis,
                       widget.meal.strMeasure2 ?? '',
                       style: context.textTheme.headlineLarge?.copyWith(
                         overflow: TextOverflow.ellipsis,

@@ -247,6 +247,7 @@ class AllProductInfoRow extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
+            overflow: TextOverflow.ellipsis,
             meal.strMeasure6 ?? '',
             style: const TextStyle(
               color: Color(0xFF7C7C7C),
@@ -258,6 +259,7 @@ class AllProductInfoRow extends StatelessWidget {
         ),
         const Text(
           ",",
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: Color(0xFF7C7C7C),
             fontFamily: "Gilroy-Medium",

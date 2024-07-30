@@ -14,12 +14,10 @@ class CorauselSliderWidget extends StatelessWidget {
 
   final CarouselController controller;
 
-  List items = [
+  List<String> items = [
     Assets.images.banner2.path,
     Assets.images.banner3.path,
     Assets.images.banner4.path,
-    Assets.images.banner2.path,
-    Assets.images.banner3.path,
   ];
 
   @override
@@ -51,7 +49,7 @@ Stack carouselWidget(HomeState state) {
     Positioned(
       left: 0,
       right: 0,
-      bottom: 0,
+      bottom: 5,
       child: CarouselSliderBulletWidget(
         state: state,
       ),
@@ -71,16 +69,39 @@ class CarouselSliderBulletWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        for (int i = 0; i < state.meals.length / 5; i++)
-          Container(
-            width: 8,
-            height: 8,
+        for (int i = 0; i < state.meals.length / 9; i++)
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            width: context.read<HomeBloc>().state.cardIndexHome == i ? 19 : 8,
+            height: 5,
             margin: const EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
               color: context.read<HomeBloc>().state.cardIndexHome == i
                   ? const Color(0xFF53B175)
                   : ColorConstants.greyColor,
-              shape: BoxShape.circle,
+              shape: BoxShape.rectangle,
+            ),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: context.read<HomeBloc>().state.cardIndexHome == i
+                  ? Container(
+                      key: ValueKey(1),
+                      height: 8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xFF53B175),
+                      ),
+                    )
+                  : Container(
+                      key: ValueKey(2),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorConstants.greyColor,
+                      ),
+                    ),
             ),
           ),
       ],
