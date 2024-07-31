@@ -8,41 +8,32 @@ class ApiService {
 
   Future<List<MealModel>> fetchAllMeals() async {
     final response = await getRequest('/search.php?s=');
-    final meals = (response['meals'] as List)
-        .map((mealJson) => MealModel.fromJson(mealJson))
+    return (response['meals'] as List<dynamic>)
+        .map((mealJson) => MealModel.fromJson(mealJson as Map<String, dynamic>))
         .toList();
-    return meals;
   }
 
-  Future<List<MealModel>> fetchSearchMeals(String endpoint2) async {
-    final response = await getRequest('/search.php?s=$endpoint2');
-    final meals = (response['meals'] as List)
-        .map((mealJson) => MealModel.fromJson(mealJson))
+  Future<List<MealModel>> fetchSearchMeals(String search) async {
+    final response = await getRequest('/search.php?s=$search');
+    return (response['meals'] as List<dynamic>)
+        .map((mealJson) => MealModel.fromJson(mealJson as Map<String, dynamic>))
         .toList();
-    return meals;
   }
 
   Future<List<MealCategory>> fetchMealCategoryName() async {
     final response = await getRequest('/list.php?c=list');
-    print(response);
     final mealCategoryModel = MealCategoryModel.fromJson(response);
-    final mealCategoryName = mealCategoryModel.meals;
-    print(mealCategoryName);
-    return mealCategoryName;
+    return mealCategoryModel.meals;
   }
 
-  Future<List<MealCategory>> fetchFilterCategoryMeal(String endpoint2) async {
-    final response = await getRequest('/filter.php?i=$endpoint2');
-
+  Future<List<MealCategory>> fetchFilterCategoryMeal(String category) async {
+    final response = await getRequest('/filter.php?i=$category');
     final mealCategoryModel = MealCategoryModel.fromJson(response);
-    final mealCategoryName = mealCategoryModel.meals;
-
-    return mealCategoryName;
+    return mealCategoryModel.meals;
   }
 
   Future<Map<String, dynamic>> getRequest(String endpoint) async {
     final response = await http.get(Uri.parse('$baseUrl$endpoint'));
-
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as Map<String, dynamic>;
     } else {
@@ -65,29 +56,29 @@ class GeneralRepository {
     }
   }
 
-  Future<List<MealCategory>> fetchMealCategorynName() async {
+  Future<List<MealCategory>> fetchMealCategoryName() async {
     try {
       return await apiService.fetchMealCategoryName();
     } catch (e) {
-      print('Error fetching all meals: $e');
+      print('Error fetching meal categories: $e');
       return [];
     }
   }
 
-  Future<List<MealCategory>> fetchFilterCategoryMeal(String endpoint2) async {
+  Future<List<MealCategory>> fetchFilterCategoryMeal(String category) async {
     try {
-      return await apiService.fetchFilterCategoryMeal(endpoint2);
+      return await apiService.fetchFilterCategoryMeal(category);
     } catch (e) {
-      print('Error fetching all meals: $e');
+      print('Error fetching filtered category meals: $e');
       return [];
     }
   }
 
-  Future<List<MealModel>> fetchSearchMeals(String endpoint2) async {
+  Future<List<MealModel>> fetchSearchMeals(String search) async {
     try {
-      return await apiService.fetchSearchMeals(endpoint2);
+      return await apiService.fetchSearchMeals(search);
     } catch (e) {
-      print('Error fetching all meals: $e');
+      print('Error fetching search meals: $e');
       return [];
     }
   }

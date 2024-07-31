@@ -6,12 +6,19 @@ class MealCategoryModel {
   final List<MealCategory> meals;
 
   factory MealCategoryModel.fromJson(Map<String, dynamic> json) {
-    return MealCategoryModel(
-      meals: json["meals"] == null
-          ? []
-          : List<MealCategory>.from(
-              json["meals"].map((x) => MealCategory.fromJson(x))),
-    );
+    // JSON'dan gelen "meals" anahtarının bir liste olduğundan emin olun
+    final mealsJson = json["meals"];
+    if (mealsJson is List) {
+      return MealCategoryModel(
+        meals: mealsJson
+            .map((x) => MealCategory.fromJson(x as Map<String, dynamic>))
+            .toList(),
+      );
+    } else {
+      return MealCategoryModel(
+        meals: [], // Eğer "meals" listesi yoksa boş bir liste dön
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -29,8 +36,12 @@ class MealCategory {
   final String strCategory;
 
   factory MealCategory.fromJson(Map<String, dynamic> json) {
+    // JSON'dan gelen "strCategory" anahtarının bir String olduğundan emin olun
+    final strCategoryJson = json['strCategory'];
     return MealCategory(
-      strCategory: json["strCategory"],
+      strCategory: strCategoryJson is String
+          ? strCategoryJson
+          : '', // Null ve tür kontrolü
     );
   }
 

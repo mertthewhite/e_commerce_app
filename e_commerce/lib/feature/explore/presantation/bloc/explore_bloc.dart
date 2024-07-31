@@ -16,7 +16,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       FetchExploreCategory event, Emitter<ExploreState> emit) async {
     emit(CategoryLoading());
     try {
-      final mealsCategoryName = await repository.fetchMealCategorynName();
+      final mealsCategoryName = await repository.fetchMealCategoryName();
       if (mealsCategoryName.isEmpty) {
         emit(CategoryError('No meals category found.'));
       } else {

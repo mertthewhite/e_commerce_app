@@ -31,7 +31,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<UpdateClearIndex>((event, emit) {
       _updateIndex(emit, event);
     });
-    on<FetchCategory>(_onFecthCategory);
     on<FetchFilteCategoryMeals>(_onFetcFilterCategory);
   }
 
@@ -49,25 +48,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       print('Error fetching meals');
       emit(HomeError(e.toString()));
-    }
-  }
-
-  Future<void> _onFecthCategory(
-      FetchCategory event, Emitter<HomeState> emit) async {
-    emit(CategoryLoading());
-    try {
-      print('Fetching category meals');
-      final mealsCategoryName = await repository.fetchMealCategorynName();
-      if (mealsCategoryName.isEmpty) {
-        emit(CategoryError('No meals category found.'));
-      } else {
-        emit(CategoryLoaded(
-          mealCategoryModel: mealsCategoryName,
-        ));
-        state.copyWith(mealCategoryModel: mealsCategoryName);
-      }
-    } catch (e) {
-      emit(CategoryError(e.toString()));
     }
   }
 

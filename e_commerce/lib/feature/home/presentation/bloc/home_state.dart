@@ -30,14 +30,15 @@ final class HomeState extends Equatable {
         mealCategoryModel
       ];
 
-  HomeState copyWith(
-      {meals,
-      cardIndexHome,
-      ratingStars,
-      searchQuery,
-      filters,
-      index,
-      mealCategoryModel}) {
+  HomeState copyWith({
+    List<MealModel>? meals,
+    int? cardIndexHome,
+    double? ratingStars,
+    String? searchQuery,
+    List<String>? filters,
+    int? index,
+    List<MealCategory>? mealCategoryModel,
+  }) {
     return HomeState(
       mealCategoryModel: mealCategoryModel ?? this.mealCategoryModel,
       filters: filters ?? this.filters,
