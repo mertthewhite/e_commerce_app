@@ -4,6 +4,8 @@ import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/meal_widget.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,13 @@ import 'package:go_router/go_router.dart';
 class HomePageGroceriesRow extends StatelessWidget {
   final HomeState state;
   final List<int> randomIndex;
+  final List<String> image;
+
   const HomePageGroceriesRow({
     required this.state,
     super.key,
     required this.randomIndex,
+    required this.image,
   });
 
   @override
@@ -27,11 +32,8 @@ class HomePageGroceriesRow extends StatelessWidget {
           children: [
             Text(
               "Groceries",
-              style: context.textTheme.headlineLarge?.copyWith(
-                color: const Color(0xFF181725),
-                fontFamily: "Gilroy",
+              style: context.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w600,
-                fontSize: 24,
               ),
             ),
             const HorizontalSpace.small(),
@@ -41,11 +43,8 @@ class HomePageGroceriesRow extends StatelessWidget {
               },
               child: Text(
                 "See all",
-                style: context.textTheme.headlineLarge?.copyWith(
-                  color: const Color(0xFF53B175),
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: ColorConstants.lightGreenColor,
                 ),
               ),
             )
@@ -53,23 +52,27 @@ class HomePageGroceriesRow extends StatelessWidget {
         ),
         VerticalSpace.small(),
         SizedBox(
-          height: context.dynamicHeight(0.15),
+          height: context.dynamicHeight(NumberConstants.zeroPointOneFive),
           child: GridView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 10,
-              crossAxisCount: 1,
-              mainAxisSpacing: 16,
-              childAspectRatio: 0.45,
+              crossAxisSpacing: NumberConstants.ten,
+              crossAxisCount: NumberConstants.oneInt,
+              mainAxisSpacing: NumberConstants.sixteen,
+              childAspectRatio: NumberConstants.zeroPointFourFive,
             ),
-            itemCount: state.meals.length > 10 ? 5 : state.meals.length,
+            itemCount: state.meals.length > NumberConstants.ten
+                ? NumberConstants.fiveInt
+                : state.meals.length,
             itemBuilder: (context, index) {
               return Container(
-                width: MediaQuery.of(context).size.width * 0.44,
+                width: MediaQuery.of(context).size.width *
+                    NumberConstants.zeroPointFourFive,
                 decoration: BoxDecoration(
-                  color: Color(0xffF8A44C).withOpacity(0.25),
-                  borderRadius: BorderRadius.circular(15),
+                  color: Color(0xffF8A44C)
+                      .withOpacity(NumberConstants.zeroPointTwoFive),
+                  borderRadius: context.borderRadiusCircular16,
                 ),
                 child: InkWell(
                   onTap: () {},
@@ -79,22 +82,17 @@ class HomePageGroceriesRow extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: context.borderRadiusCircular20,
                           child: CachedNetworkImage(
                               imageUrl: state.meals[index].strMealThumb ?? ''),
                         ),
                         Text(
                           state.meals[index].strMeal ?? '',
-                          style: context.textTheme.headlineLarge?.copyWith(
+                          style: context.textTheme.bodyMedium?.copyWith(
                             color: const Color(0xFF3E423F),
-                            fontFamily: "Gilroy",
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
                           ),
                         ),
-                        SizedBox(
-                          width: 30,
-                        )
+                        VerticalSpace.small(),
                       ],
                     ),
                   ),
@@ -110,15 +108,18 @@ class HomePageGroceriesRow extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 10,
-              crossAxisCount: 1,
-              mainAxisSpacing: 16,
+              crossAxisSpacing: NumberConstants.ten,
+              crossAxisCount: NumberConstants.oneInt,
+              mainAxisSpacing: NumberConstants.sixteen,
               childAspectRatio:
                   MediaQuery.of(context).size.height < 730 ? 1.5 : 1.78,
             ),
-            itemCount: state.meals.length > 10 ? 5 : state.meals.length,
+            itemCount: state.meals.length > NumberConstants.ten
+                ? NumberConstants.fiveInt
+                : state.meals.length,
             itemBuilder: (context, index) {
               return MealWidget(
+                image: image,
                 price: state.meals[randomIndex[index]].price,
                 models: [],
                 hiveManager: HiveDatabaseManager(),

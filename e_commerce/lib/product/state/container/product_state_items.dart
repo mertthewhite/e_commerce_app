@@ -9,7 +9,7 @@ import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart
 import 'package:e_commerce/product/router/app_router.dart';
 import 'package:e_commerce/product/state/container/product_state_container.dart';
 
-class ProductStateItems {
+final class ProductStateItems {
   const ProductStateItems._();
   //static ProductCache get productCache => ProductContainer.read<ProductCache>();
   static AppRouter get appRouter => CustomLocator.read<AppRouter>();

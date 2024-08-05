@@ -1,4 +1,6 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/button/custom_general_app_button.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
@@ -22,43 +24,41 @@ class _CartPageAcceptedState extends State<CartPageAccepted> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                right: context.dynamicWidth(0.06),
+                right: context.dynamicWidth(
+                  NumberConstants.zeroPointZeroSix,
+                ),
               ),
-              child: SvgPicture.asset("assets/images/cart_background.svg",
-                  width: 250),
+              child: SvgPicture.asset(
+                "assets/images/cart_background.svg",
+                width: context.dynamicWidth(
+                  NumberConstants.zeroPointEight,
+                ),
+              ),
             ),
-            VerticalSpace.medium(),
+            const VerticalSpace.medium(),
             Text(
               textAlign: TextAlign.center,
               "Your order has been \n accepted",
-              style: context.textTheme.headlineMedium?.copyWith(
-                color: const Color(0xFF000000),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-                fontSize: 22,
-              ),
+              style: context.textTheme.headlineMedium,
             ),
-            VerticalSpace.small(),
+            const VerticalSpace.small(),
             Text(
               textAlign: TextAlign.center,
               "Your items has been placcd and is \non it’s way to being processed",
-              style: context.textTheme.headlineMedium?.copyWith(
-                color: const Color(0xFF7C7C7C),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
+              style: context.textTheme.labelMedium?.copyWith(
+                color: ColorConstants.lightGreyColor,
               ),
             ),
-            VerticalSpace.large(),
+            const VerticalSpace.large(),
             CustomGeneralAppButton(buttonText: "Track Order", onTap: () {}),
-            VerticalSpace.small(),
+            const VerticalSpace.small(),
             CustomGeneralAppButton(
               buttonText: "Back to Home",
               onTap: () {
                 context.go('/home_page');
               },
-              textColor: const Color(0xFF000000),
-              color: Colors.white,
+              textColor: ColorConstants.blackColor,
+              color: ColorConstants.whiteColor,
             ),
           ],
         ),

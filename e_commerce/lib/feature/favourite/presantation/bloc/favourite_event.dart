@@ -66,3 +66,22 @@ class RemoveHiveFromFavouriteEvent extends FavouriteEvent {
 class ClearHiveFavouritesEvent extends FavouriteEvent {
   const ClearHiveFavouritesEvent();
 }
+
+class RatingHive extends FavouriteEvent {
+  final MealModel favourite;
+  final double rating;
+
+  const RatingHive(this.favourite, this.rating);
+
+  @override
+  List<Object> get props => [favourite, rating];
+}
+
+class LoadRatingEvent extends FavouriteEvent {
+  final MealModel favourite;
+
+  const LoadRatingEvent(this.favourite);
+
+  @override
+  List<Object> get props => [favourite];
+}

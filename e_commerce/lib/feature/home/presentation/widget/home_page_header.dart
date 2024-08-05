@@ -1,4 +1,5 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class HomePageHeader extends StatelessWidget {
           const VerticalSpace.medium(),
         SvgPicture.asset(
           'assets/icons/carrot.svg',
-          width: 20,
+          width: NumberConstants.twenty,
         ),
         const VerticalSpace.xxSmall(),
         Row(
@@ -28,16 +29,13 @@ class HomePageHeader extends StatelessWidget {
           children: [
             SvgPicture.asset(
               'assets/icons/pin.svg',
-              width: 13,
+              width: NumberConstants.thirteen,
             ),
             const HorizontalSpace.xxSmall(),
             Text(
               "Dhaka, Banassre",
-              style: context.textTheme.headlineLarge?.copyWith(
+              style: context.textTheme.bodyMedium?.copyWith(
                 color: const Color(0xFF4C4F4D),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
               ),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,11 +14,8 @@ class HomePageOfferTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text("Exclusive Offer",
-            style: context.textTheme.labelMedium?.copyWith(
-              color: const Color(0xFF181725),
-              fontFamily: "Gilroy",
+            style: context.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w600,
-              fontSize: 24,
             )),
         InkWell(
           onTap: () {
@@ -25,11 +23,8 @@ class HomePageOfferTitle extends StatelessWidget {
           },
           child: Text(
             "See all",
-            style: context.textTheme.labelMedium?.copyWith(
-              color: const Color(0xFF53B175),
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
+            style: context.textTheme.bodySmall?.copyWith(
+              color: ColorConstants.lightGreenColor,
             ),
           ),
         )

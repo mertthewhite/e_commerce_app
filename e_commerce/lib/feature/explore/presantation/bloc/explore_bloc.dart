@@ -12,6 +12,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     on<FetchExploreCategory>(_onFecthCategory);
   }
   final GeneralRepository repository;
+
   Future<void> _onFecthCategory(
       FetchExploreCategory event, Emitter<ExploreState> emit) async {
     emit(CategoryLoading());

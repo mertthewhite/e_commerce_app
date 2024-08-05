@@ -1,6 +1,8 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -91,58 +93,44 @@ class CartProductDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: context.dynamicWidth(0.4),
+          width: context.dynamicWidth(NumberConstants.zeroPointFour),
           child: Row(
             children: [
               Flexible(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
                   meal.strIngredient2.toString(),
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    color: const Color(0xFF000000),
-                    fontFamily: "Gilroy",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                  ),
+                  style: context.textTheme.bodyMedium?.copyWith(),
                 ),
               ),
             ],
           ),
         ),
         Container(
-          width: context.dynamicWidth(0.4),
+          width: context.dynamicWidth(NumberConstants.zeroPointFour),
           child: Row(
             children: [
               Flexible(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
                   meal.strMeasure6 ?? 'Unknown Measure',
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 50, 45, 45),
-                    fontFamily: "Gilroy",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: ColorConstants.lightGreyColor,
                   ),
                 ),
               ),
-              const Text(
+              Text(
                 ",",
-                style: TextStyle(
-                  color: Color(0xFF7C7C7C),
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
+                style: context.textTheme.labelSmall?.copyWith(
+                  color: ColorConstants.lightGreyColor,
                 ),
               ),
               Flexible(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
                   meal.strMeasure2 ?? 'Unknown Measure',
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    color: const Color(0xFF7C7C7C),
-                    fontFamily: "Gilroy",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: ColorConstants.lightGreyColor,
                   ),
                 ),
               ),

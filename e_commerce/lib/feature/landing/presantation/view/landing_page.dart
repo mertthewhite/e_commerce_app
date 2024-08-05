@@ -3,6 +3,7 @@ import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/landing/presantation/mixin/landing_mixin.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +31,7 @@ class _LandingPageState extends State<LandingPage> with LandingPageMixin {
           children: [
             Container(
               decoration: const BoxDecoration(
-                color: Color(0xFF53B175),
+                color: ColorConstants.lightGreenColor,
               ),
               child: Center(
                 child: SvgPicture.asset(
@@ -41,7 +42,7 @@ class _LandingPageState extends State<LandingPage> with LandingPageMixin {
             ValueListenableBuilder<bool>(
               valueListenable: navigatedNotifier,
               builder: (context, navigated, child) {
-                return Container();
+                return SizedBox.shrink();
               },
             ),
           ],

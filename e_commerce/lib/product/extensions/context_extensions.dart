@@ -49,24 +49,29 @@ extension PaddingExtension on BuildContext {
   EdgeInsets get paddingAllHigh => EdgeInsets.all(highValue);
 
   /// Adds 1% padding horizontally.
-  EdgeInsets get paddingHorizontalLow => EdgeInsets.symmetric(horizontal: lowValue);
+  EdgeInsets get paddingHorizontalLow =>
+      EdgeInsets.symmetric(horizontal: lowValue);
 
   /// Adds 2% padding horizontally.
   /// Use this when you want to add padding horizontally.
-  EdgeInsets get paddingHorizontalDefault => EdgeInsets.symmetric(horizontal: defaultValue);
+  EdgeInsets get paddingHorizontalDefault =>
+      EdgeInsets.symmetric(horizontal: defaultValue);
 
   /// Adds 5% padding horizontally.
-  EdgeInsets get paddingHorizontalHigh => EdgeInsets.symmetric(horizontal: highValue);
+  EdgeInsets get paddingHorizontalHigh =>
+      EdgeInsets.symmetric(horizontal: highValue);
 
   /// Adds 1% padding vertically.
   EdgeInsets get paddingVerticalLow => EdgeInsets.symmetric(vertical: lowValue);
 
   /// Adds 2% padding vertically.
   /// Use this when you want to add padding vertically.
-  EdgeInsets get paddingVerticalDefault => EdgeInsets.symmetric(vertical: defaultValue);
+  EdgeInsets get paddingVerticalDefault =>
+      EdgeInsets.symmetric(vertical: defaultValue);
 
   /// Adds 5% padding vertically.
-  EdgeInsets get paddingVerticalHigh => EdgeInsets.symmetric(vertical: highValue);
+  EdgeInsets get paddingVerticalHigh =>
+      EdgeInsets.symmetric(vertical: highValue);
 
   /// Adds 1% padding from right.
   EdgeInsets get paddingRightLow => EdgeInsets.only(right: lowValue);
@@ -118,4 +123,51 @@ extension ThemeExtension on BuildContext {
 
   /// Get the brightness
   Brightness get brightness => Theme.of(this).brightness;
+}
+
+extension BorderRadiusExtension on BuildContext {
+  /// Adds a circular border radius of 2.0
+  BorderRadius get borderRadiusCircular2 => BorderRadius.circular(2.0);
+
+  /// Adds a circular border radius of 4.0
+  BorderRadius get borderRadiusCircular4 => BorderRadius.circular(4.0);
+
+  /// Adds a circular border radius of 6.0
+  BorderRadius get borderRadiusCircular6 => BorderRadius.circular(6.0);
+
+  /// Adds a circular border radius of 8.0
+  BorderRadius get borderRadiusCircular8 => BorderRadius.circular(8.0);
+
+  /// Adds a circular border radius of 10.0
+  BorderRadius get borderRadiusCircular10 => BorderRadius.circular(10.0);
+
+  /// Adds a circular border radius of 12.0
+  BorderRadius get borderRadiusCircular12 => BorderRadius.circular(12.0);
+
+  /// Adds a circular border radius of 14.0
+  BorderRadius get borderRadiusCircular14 => BorderRadius.circular(14.0);
+
+  /// Adds a circular border radius of 16.0
+  BorderRadius get borderRadiusCircular16 => BorderRadius.circular(16.0);
+
+  /// Adds a circular border radius of 18.0
+  BorderRadius get borderRadiusCircular18 => BorderRadius.circular(18.0);
+
+  /// Adds a circular border radius of 20.0
+  BorderRadius get borderRadiusCircular20 => BorderRadius.circular(20.0);
+
+  /// Adds a circular border radius of 24.0
+  BorderRadius get borderRadiusCircular24 => BorderRadius.circular(24.0);
+
+  /// Adds a circular border radius of 28.0
+  BorderRadius get borderRadiusCircular28 => BorderRadius.circular(28.0);
+
+  /// Adds a circular border radius of 32.0
+  BorderRadius get borderRadiusCircular32 => BorderRadius.circular(32.0);
+
+  /// Adds a circular border radius of 36.0
+  BorderRadius get borderRadiusCircular36 => BorderRadius.circular(36.0);
+
+  /// Adds a circular border radius of 40.0
+  BorderRadius get borderRadiusCircular40 => BorderRadius.circular(40.0);
 }

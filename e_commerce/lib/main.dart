@@ -12,7 +12,7 @@ import 'package:flutter/services.dart';
 
 Future<void> main() async {
   await ApplicationInitialize().make();
-  runApp(ProductLocalization(child: StateInitialize(child: _MyApp())));
+  runApp(ProductLocalization(child: const StateInitialize(child: _MyApp())));
 }
 
 class _MyApp extends StatelessWidget {

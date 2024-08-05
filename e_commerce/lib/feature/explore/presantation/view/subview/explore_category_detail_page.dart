@@ -1,14 +1,18 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/explore/presantation/view/subview/widget/animated_product_item.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExploreCategoryDetailPage extends StatefulWidget {
+  const ExploreCategoryDetailPage({
+    required this.selectedFilters,
+    super.key,
+  });
   final List<String> selectedFilters;
-
-  const ExploreCategoryDetailPage({required this.selectedFilters});
 
   @override
   State<ExploreCategoryDetailPage> createState() =>
@@ -30,34 +34,15 @@ class _ExploreCategoryDetailPageState extends State<ExploreCategoryDetailPage> {
         }).toList();
 
         return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            backgroundColor: Colors.transparent,
-            centerTitle: true,
-            title: Text(
-              'Filtered Products',
-              style: context.textTheme.headlineMedium?.copyWith(
-                color: const Color(0xFF000000),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
-            ),
-          ),
+          appBar: const CustomGeneralAppBar(title: 'Category Detail'),
           body: Padding(
             padding: context.paddingAllDefault,
             child: GridView.builder(
-              scrollDirection: Axis.vertical,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 10,
-                crossAxisCount: 2,
-                mainAxisSpacing: 19,
-                childAspectRatio: 0.63,
+                crossAxisSpacing: NumberConstants.ten,
+                crossAxisCount: NumberConstants.twoInt,
+                mainAxisSpacing: NumberConstants.nineteen,
+                childAspectRatio: NumberConstants.zeroPointSix,
               ),
               itemCount: filteredMeals.length,
               itemBuilder: (context, index) {

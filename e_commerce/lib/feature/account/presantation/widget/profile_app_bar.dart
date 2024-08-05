@@ -1,3 +1,7 @@
+import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -27,25 +31,18 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    // Ekran boyutlarına göre dinamik yüksekliği hesaplayın
-    final double height =
-        MediaQuery.of(context).size.height < 800 ? 70 : _toolbarHeight;
-
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       flexibleSpace: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: 10, horizontal: MediaQuery.of(context).size.width * 0.05),
+        padding: context.paddingHorizontalDefault,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 30,
+              radius: NumberConstants.thirty,
               backgroundImage: AssetImage(widget.avatarPath),
             ),
-            SizedBox(width: 10),
+            const HorizontalSpace.xxSmall(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -54,31 +51,20 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                   children: [
                     Text(
                       widget.name,
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: const Color(0xFF181725),
-                                fontFamily: "Gilroy-Bold",
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(),
                     ),
-                    SizedBox(width: 5),
+                    const HorizontalSpace.xxSmall(),
                     GestureDetector(
                       onTap: widget.onEditTap,
-                      child: SvgPicture.asset(
-                        'assets/icons/pencil.svg',
-                        width: 15,
-                      ),
+                      child: SvgPicture.asset('assets/icons/pencil.svg',
+                          width: NumberConstants.fifteen),
                     ),
                   ],
                 ),
-                SizedBox(height: 4), // Küçük bir boşluk ekleyin
                 Text(
                   widget.email,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: const Color(0xFF7C7C7C),
-                        fontFamily: "Gilroy",
-                        fontSize: 12,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: ColorConstants.lightGreyColor,
                       ),
                 ),
               ],

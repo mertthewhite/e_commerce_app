@@ -9,7 +9,7 @@ class CustomLightTheme implements CustomTheme {
   @override
   ThemeData get themeData => ThemeData(
         useMaterial3: true,
-        fontFamily: GoogleFonts.lexend().fontFamily,
+        fontFamily: 'Gilroy',
         colorScheme: CustomColorScheme.lightColorScheme,
         floatingActionButtonTheme: floatingActionButtonThemeData,
         textTheme: textTheme,
@@ -101,11 +101,5 @@ class CustomLightTheme implements CustomTheme {
 
   @override
   BottomNavigationBarThemeData get bottomNavigationBarThemeData =>
-      BottomNavigationBarThemeData(
-        backgroundColor: CustomColorScheme.lightColorScheme.background,
-        selectedItemColor: CustomColorScheme.lightColorScheme.primary,
-        unselectedItemColor: CustomColorScheme.lightColorScheme.secondary,
-        selectedLabelStyle: textTheme.bodyMedium,
-        unselectedLabelStyle: textTheme.bodyMedium,
-      );
+      BottomNavigationBarThemeData();
 }

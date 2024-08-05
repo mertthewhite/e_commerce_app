@@ -1,4 +1,7 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/divider/custom_divider.dart';
 import 'package:flutter/material.dart';
 
 class CartCheckOutList extends StatelessWidget {
@@ -22,23 +25,20 @@ class CartCheckOutList extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding:
-            context.paddingHorizontalDefault * 1.4 + context.paddingVerticalLow,
+        padding: context.paddingHorizontalDefault,
         child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: context.borderRadiusCircular16,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     firstText,
-                    style: const TextStyle(
-                      color: Color(0xFF7C7C7C),
-                      fontFamily: "Gilroy",
-                      fontSize: 15,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: ColorConstants.lightGreyColor,
                     ),
                   ),
                   Row(
@@ -46,27 +46,19 @@ class CartCheckOutList extends StatelessWidget {
                       widget2 ??
                           Text(
                             secondText ?? '',
-                            style: const TextStyle(
-                              color: Color(0xFF181725),
-                              fontFamily: "Gilroy",
-                              fontSize: 14,
-                            ),
+                            style: context.textTheme.labelMedium?.copyWith(),
                           ),
                       widget ??
                           const Icon(
                             Icons.keyboard_arrow_right,
-                            size: 24,
-                            color: Color(0xFF181725),
+                            size: NumberConstants.twentyfive,
                           ),
                     ],
                   ),
                 ],
               ),
             ),
-            const Divider(
-              color: Color(0xffE2E2E2),
-              thickness: 1,
-            ),
+            const CustomDivider(),
           ],
         ),
       ),

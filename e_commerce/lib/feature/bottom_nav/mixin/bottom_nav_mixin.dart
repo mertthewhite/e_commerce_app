@@ -1,9 +1,10 @@
 import 'package:e_commerce/feature/bottom_nav/widget/bottom_nav_builder_widget.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/state/container/product_state_items.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 mixin BottomNavigationBarMixin on State<BottomNavBuilder> {
@@ -23,8 +24,9 @@ mixin BottomNavigationBarMixin on State<BottomNavBuilder> {
     required SvgGenImage icon,
     required int index,
   }) {
-    final iconColor =
-        tabContext.index == index ? Color(0xFF53B175) : Color(0xFF000000);
+    final iconColor = tabContext.index == index
+        ? ColorConstants.lightGreenColor
+        : ColorConstants.blackColor;
 
     return BottomNavigationBarItem(
       backgroundColor: Colors.transparent,
@@ -32,8 +34,8 @@ mixin BottomNavigationBarMixin on State<BottomNavBuilder> {
         padding: context.paddingTopLow,
         child: icon.svg(
           color: iconColor,
-          width: context.dynamicWidth(0.03),
-          height: context.dynamicHeight(0.03),
+          width: context.dynamicWidth(NumberConstants.zeroPointZeroThree),
+          height: context.dynamicHeight(NumberConstants.zeroPointZeroThree),
         ),
       ),
       label: tabContext.pagesLabel[index],

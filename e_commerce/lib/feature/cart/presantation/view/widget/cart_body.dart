@@ -13,19 +13,25 @@ class CartBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sortedMeals = addedMeals.entries.toList()
+      ..sort((a, b) {
+        final aId = a.key.idMeal ?? '';
+        final bId = b.key.idMeal ?? '';
+        return bId.compareTo(aId);
+      });
     return Stack(
       children: [
         ListView.builder(
-          itemCount: addedMeals.length,
+          itemCount: sortedMeals.length,
           itemBuilder: (BuildContext context, int index) {
-            final meal = addedMeals.keys.elementAt(index);
+            final meal = sortedMeals[index].key;
             return CartPageCard(
               meal: meal,
-              count: addedMeals[meal]!,
+              count: sortedMeals[index].value,
             );
           },
         ),
-        CartPageButton(),
+        const CartPageButton(),
       ],
     );
   }

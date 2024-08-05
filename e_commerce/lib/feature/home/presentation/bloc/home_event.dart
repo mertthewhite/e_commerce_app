@@ -53,11 +53,13 @@ class CardIndexHome extends HomeEvent {
 class RatingStars extends HomeEvent {
   RatingStars(
     this.ratingStars,
+    this.meal,
   );
   final double ratingStars;
+  final MealModel meal;
 
   @override
-  List<Object> get props => [ratingStars];
+  List<Object> get props => [ratingStars, meal];
 }
 
 final class SearchQueryChanged extends HomeEvent {
@@ -162,4 +164,21 @@ final class FilterCategoryLoaded extends HomeState {
 
   @override
   List<Object> get props => [mealCategoryModel];
+}
+
+class RatingHomeHive extends HomeEvent {
+  final MealModel favourite;
+  final double rating;
+
+  RatingHomeHive(this.favourite, this.rating);
+
+  @override
+  List<Object> get props => [favourite, rating];
+}
+
+class UpdateProductRatingEvent extends HomeEvent {
+  final MealModel meal;
+  final double newRating;
+
+  UpdateProductRatingEvent(this.meal, this.newRating);
 }

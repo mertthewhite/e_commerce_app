@@ -1,18 +1,19 @@
-import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
-import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
-import 'package:e_commerce/feature/home/presentation/view/sub_view/meal_search_page.dart';
-import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
-import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
+import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
-import 'package:e_commerce/product/extensions/context_extensions.dart';
-import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
+import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
+import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/feature/home/presentation/view/mixin/all_product_mixin.dart';
+import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 
 class AllProductPage extends StatefulWidget {
   const AllProductPage({super.key});
@@ -21,50 +22,14 @@ class AllProductPage extends StatefulWidget {
   State<AllProductPage> createState() => _AllProductPageState();
 }
 
-class _AllProductPageState extends State<AllProductPage> {
-  List<String> _selectedFilters = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFilters();
-  }
-
-  Future<void> _loadFilters() async {
-    final filters = await FilterStorage().loadFilters();
-    setState(() {
-      _selectedFilters = filters;
-    });
-    context.read<HomeBloc>().add(FilterMealsEvent(filters: _selectedFilters));
-  }
-
-  void _openFilterBottomSheet() async {
-    final selectedFilters = await showModalBottomSheet<List<String>>(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      isScrollControlled: true,
-      context: context,
-      builder: (context) =>
-          FilterBottomSheet(selectedFilters: _selectedFilters),
-    );
-
-    if (selectedFilters != null) {
-      setState(() {
-        _selectedFilters = selectedFilters;
-      });
-      await FilterStorage().saveFilters(_selectedFilters);
-      context.read<HomeBloc>().add(FilterMealsEvent(filters: _selectedFilters));
-    }
-  }
-
+class _AllProductPageState extends State<AllProductPage> with AllProductMixin {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         final filteredMeals = state.meals.where((meal) {
-          return _selectedFilters.isEmpty ||
-              _selectedFilters.any((filter) =>
+          return selectedFiltered.isEmpty ||
+              selectedFiltered.any((filter) =>
                   meal.strCategory
                       ?.toLowerCase()
                       .contains(filter.toLowerCase()) ??
@@ -72,31 +37,12 @@ class _AllProductPageState extends State<AllProductPage> {
         }).toList();
 
         return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-            automaticallyImplyLeading: false,
+          appBar: CustomGeneralAppBar(
+            title: 'All Products',
             actions: [
-              ActionShowModalBottomSheet(onFilterTap: _openFilterBottomSheet),
-              const HorizontalSpace.small(),
+              ActionShowModalBottomSheet(onFilterTap: openFilterBottomSheet),
+              const HorizontalSpace.xSmall(),
             ],
-            backgroundColor: Colors.transparent,
-            centerTitle: true,
-            title: Text(
-              state.meals.isNotEmpty
-                  ? state.meals[0].strCategory.toString()
-                  : 'Products',
-              style: context.textTheme.headlineMedium?.copyWith(
-                color: const Color(0xFF000000),
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
-            ),
           ),
           body: Padding(
             padding: context.paddingAllDefault,
@@ -111,7 +57,10 @@ class _AllProductPageState extends State<AllProductPage> {
               itemCount: filteredMeals.length,
               itemBuilder: (context, index) {
                 final meal = filteredMeals[index];
-                return ProductCard(meal: meal);
+                return ProductCard(
+                  meal: meal,
+                  image: image,
+                );
               },
             ),
           ),
@@ -122,9 +71,14 @@ class _AllProductPageState extends State<AllProductPage> {
 }
 
 class ProductCard extends StatefulWidget {
+  final List<String> image;
   final MealModel meal;
 
-  const ProductCard({super.key, required this.meal});
+  const ProductCard({
+    Key? key,
+    required this.image,
+    required this.meal,
+  }) : super(key: key);
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -210,7 +164,7 @@ class _ProductCardState extends State<ProductCard> {
                       duration: const Duration(milliseconds: 100),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF53B175),
+                          color: ColorConstants.lightGreenColor,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Padding(
@@ -250,7 +204,7 @@ class AllProductInfoRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             meal.strMeasure6 ?? '',
             style: const TextStyle(
-              color: Color(0xFF7C7C7C),
+              color: ColorConstants.lightGreyColor,
               fontFamily: "Gilroy-Medium",
               fontWeight: FontWeight.w700,
               fontSize: 14,
@@ -261,7 +215,7 @@ class AllProductInfoRow extends StatelessWidget {
           ",",
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: Color(0xFF7C7C7C),
+            color: ColorConstants.lightGreyColor,
             fontFamily: "Gilroy-Medium",
             fontWeight: FontWeight.w700,
             fontSize: 12,
@@ -272,7 +226,7 @@ class AllProductInfoRow extends StatelessWidget {
             meal.strMeasure2 ?? '',
             style: context.textTheme.headlineLarge?.copyWith(
               overflow: TextOverflow.ellipsis,
-              color: const Color(0xFF7C7C7C),
+              color: ColorConstants.lightGreyColor,
               fontFamily: "Gilroy-Medium",
               fontWeight: FontWeight.w700,
               fontSize: 12,
@@ -379,7 +333,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.87,
                 decoration: const BoxDecoration(
-                  color: Color(0xffF2F3F2),
+                  color: ColorConstants.containerBackground,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -425,7 +379,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    activeColor: const Color(0xff53B175),
+                                    activeColor: ColorConstants.lightGreenColor,
                                     checkColor: Colors.white,
                                     side: const BorderSide(
                                         color: Color(0xffB1B1B1)),
@@ -506,7 +460,7 @@ class CustomAllButton extends StatelessWidget {
           height: height ?? context.dynamicHeight(0.11),
           width: width ?? context.dynamicWidth(0.89),
           decoration: BoxDecoration(
-            color: const Color(0xff53B175),
+            color: ColorConstants.lightGreenColor,
             borderRadius: BorderRadius.circular(19),
           ),
           child: Padding(

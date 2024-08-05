@@ -1,4 +1,6 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,27 +13,24 @@ class ExplorePageSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.dynamicHeight(0.075),
-      width: context.dynamicWidth(1),
+      height: context.dynamicHeight(NumberConstants.zeroPointZeroSeven),
+      width: context.dynamicWidth(NumberConstants.one),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: const Color(0xFFF2F3F2),
+        borderRadius: BorderRadius.circular(NumberConstants.fifteen),
+        color: ColorConstants.containerBackground,
       ),
       child: Row(
         children: [
           const HorizontalSpace.small(),
           SvgPicture.asset(
             'assets/icons/search.svg',
-            width: 17.21,
+            width: NumberConstants.eighteen,
           ),
           const HorizontalSpace.small(),
           Text(
-            "Search Store",
-            style: context.textTheme.headlineLarge?.copyWith(
-              color: const Color(0xFF7C7C7C),
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
+            'Search Store',
+            style: context.textTheme.bodySmall?.copyWith(
+              color: ColorConstants.lightGreyColor,
             ),
           ),
         ],

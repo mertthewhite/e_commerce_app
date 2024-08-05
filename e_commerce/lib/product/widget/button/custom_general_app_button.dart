@@ -1,4 +1,5 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomGeneralAppButton extends StatelessWidget {
@@ -34,7 +35,7 @@ class CustomGeneralAppButton extends StatelessWidget {
           height: height ?? context.dynamicHeight(0.09),
           width: width ?? context.dynamicWidth(0.89),
           decoration: BoxDecoration(
-            color: color ?? const Color(0xff53B175),
+            color: color ?? ColorConstants.lightGreenColor,
             borderRadius: radius ?? BorderRadius.circular(19),
           ),
           child: Padding(

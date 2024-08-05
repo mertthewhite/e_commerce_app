@@ -4,10 +4,13 @@ import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.da
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
+import 'package:e_commerce/feature/home/presentation/view/mixin/product_detail_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/button/custom_general_app_button.dart';
+import 'package:e_commerce/product/widget/divider/custom_divider.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
@@ -28,129 +31,132 @@ class ProductDetailPage extends StatefulWidget {
 
 bool _isExpanded = false;
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
-  void initState() {
-    super.initState();
-    context.read<FavouriteBloc>().add(LoadFavouritesEvent());
-  }
-
+class _ProductDetailPageState extends State<ProductDetailPage>
+    with ProductDetailMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-    return Scaffold(
-        backgroundColor: const Color(0xffF2F3F2),
-        body: SingleChildScrollView(
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Color(0xffF2F3F2),
-            ),
-            child: Column(
-              children: [
-                mediaQuery.size.height > 800
-                    ? VerticalSpace.medium()
-                    : VerticalSpace.small(),
-                VerticalSpace.small(),
-                Container(
-                  child: Padding(
-                    padding: context.paddingAllDefault,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            size: 24,
+    return BlocListener<HomeBloc, HomeState>(
+      listener: (context, state) {
+        setState(() {
+          widget.selectedProduct.rating = state.meals
+              .firstWhere(
+                  (element) => element.idMeal == widget.selectedProduct.idMeal)
+              .rating;
+        });
+      },
+      child: Scaffold(
+          backgroundColor: ColorConstants.containerBackground,
+          body: SingleChildScrollView(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: ColorConstants.containerBackground,
+              ),
+              child: Column(
+                children: [
+                  mediaQuery.size.height > 800
+                      ? VerticalSpace.medium()
+                      : VerticalSpace.xSmall(),
+                  VerticalSpace.small(),
+                  Container(
+                    child: Padding(
+                      padding: context.paddingAllDefault,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              size: 24,
+                            ),
                           ),
+                          SvgPicture.asset(
+                            Assets.icons.export.path,
+                            width: 24,
+                            height: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: context.dynamicHeight(0.4),
+                    decoration: const BoxDecoration(
+                      color: ColorConstants.containerBackground,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                    width: double.infinity,
+                    child: IngredientThumbnail(
+                      cart: false,
+                      bigImage: true,
+                      ingredient:
+                          widget.selectedProduct.strIngredient2.toString(),
+                    ),
+                  ),
+                  Padding(
+                    padding: context.paddingAllDefault * 1.5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ProductDetailFavRow(context),
+                        const VerticalSpace.small(),
+                        ProductDetailCounter(
+                          meal: widget.selectedProduct,
                         ),
-                        SvgPicture.asset(
-                          Assets.icons.export.path,
-                          width: 24,
-                          height: 24,
-                        ),
+                        const VerticalSpace.small(),
+                        CustomDivider(),
+                        _ProductDetail(context),
+                        const CustomDivider(),
+                        _ProductDetailNutritions(context),
+                        _ProductDetailReview(context),
+                        const VerticalSpace.small(),
+                        CustomGeneralAppButton(
+                            buttonText: 'Add To Basket',
+                            onTap: () {
+                              if (context.read<HomeBloc>().state.index == 0) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  backgroundColor: const Color(0xffF3603F),
+                                  content: Center(
+                                      child: Text('Please add some quantity')),
+                                  duration: Duration(seconds: 1),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  backgroundColor:
+                                      ColorConstants.lightGreenColor,
+                                  content: Center(child: Text('Added to cart')),
+                                  duration: Duration(seconds: 2),
+                                ));
+                                context.pop();
+                                context
+                                    .read<HomeBloc>()
+                                    .add(UpdateClearIndex());
+                              }
+
+                              for (int i = 0;
+                                  i < context.read<HomeBloc>().state.index;
+                                  i++) {
+                                context.read<CartBloc>().add(
+                                    AddToHiveCartEvent(widget.selectedProduct));
+                              }
+                            }),
                       ],
                     ),
                   ),
-                ),
-                Container(
-                  height: context.dynamicHeight(0.4),
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF2F3F2),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                  ),
-                  width: double.infinity,
-                  child: IngredientThumbnail(
-                    cart: false,
-                    bigImage: true,
-                    ingredient:
-                        widget.selectedProduct.strIngredient2.toString(),
-                  ),
-                ),
-                Padding(
-                  padding: context.paddingAllDefault * 1.5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ProductDetailFavRow(context),
-                      const VerticalSpace.small(),
-                      ProductDetailCounter(
-                        meal: widget.selectedProduct,
-                      ),
-                      const VerticalSpace.small(),
-                      const Divider(
-                        thickness: 1,
-                        color: Color(0xffE0E0E0),
-                      ),
-                      _ProductDetail(context),
-                      const Divider(
-                        thickness: 1,
-                        color: Color(0xffE0E0E0),
-                      ),
-                      _ProductDetailNutritions(context),
-                      _ProductDetailReview(context),
-                      const VerticalSpace.small(),
-                      CustomGeneralAppButton(
-                          buttonText: 'Add To Basket',
-                          onTap: () {
-                            if (context.read<HomeBloc>().state.index == 0) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                backgroundColor: const Color(0xffF3603F),
-                                content: Center(
-                                    child: Text('Please add some quantity')),
-                                duration: Duration(seconds: 1),
-                              ));
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                backgroundColor: const Color(0xff53B175),
-                                content: Center(child: Text('Added to cart')),
-                                duration: Duration(seconds: 2),
-                              ));
-                              context.pop();
-                              context.read<HomeBloc>().add(UpdateClearIndex());
-                            }
-
-                            for (int i = 0;
-                                i < context.read<HomeBloc>().state.index;
-                                i++) {
-                              context.read<CartBloc>().add(
-                                  AddToHiveCartEvent(widget.selectedProduct));
-                            }
-                          }),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   Column ProductDetailFavRow(BuildContext context) {
@@ -192,7 +198,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           .favourites
                           .contains(widget.selectedProduct)
                       ? const Color(0xffF3603F)
-                      : const Color(0xff7C7C7C),
+                      : ColorConstants.lightGreyColor,
                   size: 22,
                 );
               },
@@ -205,7 +211,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: Text(
                 widget.selectedProduct.strMeasure6 ?? '',
                 style: context.textTheme.headlineLarge?.copyWith(
-                  color: const Color(0xFF7C7C7C),
+                  color: ColorConstants.lightGreyColor,
                   fontFamily: "Gilroy-Medium",
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
@@ -215,7 +221,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Text(
               ",",
               style: context.textTheme.headlineLarge?.copyWith(
-                color: const Color(0xFF7C7C7C),
+                color: ColorConstants.lightGreyColor,
                 fontFamily: "Gilroy-Medium",
                 fontWeight: FontWeight.w700,
                 fontSize: 12,
@@ -226,7 +232,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 widget.selectedProduct.strMeasure2 ?? '',
                 style: context.textTheme.headlineLarge?.copyWith(
                   overflow: TextOverflow.ellipsis,
-                  color: const Color(0xFF7C7C7C),
+                  color: ColorConstants.lightGreyColor,
                   fontFamily: "Gilroy-Medium",
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
@@ -257,9 +263,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Row(
               children: [
                 rate.RatingStars(
-                  value: context.watch<HomeBloc>().state.ratingStar,
+                  value: context.watch<HomeBloc>().state.ratingStars,
                   onValueChanged: (v) {
-                    context.read<HomeBloc>().add(RatingStars(v));
+                    context
+                        .read<HomeBloc>()
+                        .add(RatingStars(v, widget.selectedProduct));
                   },
                   starBuilder: (index, color) => Icon(
                     Icons.star,
@@ -279,9 +287,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   starColor: const Color(0xffF3603F),
                 ),
                 InkWell(
-                  onTap: () {
-                    print(context.read<HomeBloc>().state.ratingStar);
-                  },
+                  onTap: () {},
                   child: const Icon(Icons.keyboard_arrow_right),
                 ),
               ],
@@ -311,7 +317,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xffF2F3F2),
+                    color: ColorConstants.containerBackground,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Padding(
@@ -319,7 +325,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: Text(
                       widget.selectedProduct.strMeasure1 ?? '',
                       style: context.textTheme.headlineLarge?.copyWith(
-                        color: const Color(0xFF7C7C7C),
+                        color: ColorConstants.lightGreyColor,
                         fontFamily: "Gilroy",
                         fontWeight: FontWeight.w700,
                         fontSize: 9,
@@ -337,10 +343,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             )
           ],
         ),
-        const Divider(
-          thickness: 1,
-          color: Color(0xffE0E0E0),
-        ),
+        const CustomDivider(),
       ],
     );
   }
@@ -381,7 +384,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Text(
                 widget.selectedProduct.strInstructions.toString(),
                 style: context.textTheme.headlineLarge?.copyWith(
-                  color: const Color(0xFF7C7C7C),
+                  color: ColorConstants.lightGreyColor,
                   fontFamily: "Gilroy-Medium",
                   fontSize: 13,
                 ),
@@ -404,7 +407,7 @@ class ProductDetailButton extends StatelessWidget {
       child: Container(
         width: context.dynamicWidth(0.89),
         decoration: BoxDecoration(
-          color: const Color(0xff53B175),
+          color: ColorConstants.lightGreenColor,
           borderRadius: BorderRadius.circular(19),
         ),
         child: Padding(

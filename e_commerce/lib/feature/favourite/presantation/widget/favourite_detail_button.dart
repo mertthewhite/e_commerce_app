@@ -2,6 +2,7 @@ import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +35,7 @@ class FavouriteDetailButton extends StatelessWidget {
           height: context.dynamicHeight(0.09),
           width: context.dynamicWidth(0.89),
           decoration: BoxDecoration(
-            color: const Color(0xff53B175),
+            color: ColorConstants.lightGreenColor,
             borderRadius: BorderRadius.circular(19),
           ),
           child: Padding(

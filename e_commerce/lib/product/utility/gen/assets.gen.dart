@@ -167,6 +167,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/chicken.png
   AssetGenImage get chicken => const AssetGenImage('assets/images/chicken.png');
 
+  /// File path: assets/images/desert.jpeg
+  AssetGenImage get desert => const AssetGenImage('assets/images/desert.jpeg');
+
+  /// File path: assets/images/dessert.png
+  AssetGenImage get dessert => const AssetGenImage('assets/images/dessert.png');
+
   /// File path: assets/images/landing.svg
   SvgGenImage get landing => const SvgGenImage('assets/images/landing.svg');
 
@@ -178,6 +184,9 @@ class $AssetsImagesGen {
   SvgGenImage get onboarding =>
       const SvgGenImage('assets/images/onboarding.svg');
 
+  /// File path: assets/images/seafood.png
+  AssetGenImage get seafood => const AssetGenImage('assets/images/seafood.png');
+
   /// List of all assets
   List<dynamic> get values => [
         rectangle82,
@@ -188,9 +197,12 @@ class $AssetsImagesGen {
         cartBacground,
         cartBackground,
         chicken,
+        desert,
+        dessert,
         landing,
         onbaordingg,
-        onboarding
+        onboarding,
+        seafood
       ];
 }
 

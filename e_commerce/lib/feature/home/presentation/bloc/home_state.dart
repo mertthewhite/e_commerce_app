@@ -4,40 +4,48 @@ final class HomeState extends Equatable {
   const HomeState({
     this.meals = const [],
     this.cardIndexHome = 0,
-    this.ratingStar = 0.0,
     this.searchQuery = '',
     this.filters = const [],
     this.index = 0,
     this.mealCategoryModel = const [],
+    this.ratingStars = 0,
+    this.status,
+    this.errorMessage,
   });
 
   final List<MealModel> meals;
   final List<MealCategory> mealCategoryModel;
   final int cardIndexHome;
-  final double ratingStar;
   final String searchQuery;
   final List<String> filters;
   final int index;
+  final double ratingStars;
+  final ViewStatus? status;
+  final String? errorMessage;
 
   @override
   List<Object?> get props => [
         meals,
         cardIndexHome,
-        ratingStar,
         searchQuery,
         filters,
         index,
-        mealCategoryModel
+        mealCategoryModel,
+        ratingStars,
+        status,
+        errorMessage
       ];
 
   HomeState copyWith({
     List<MealModel>? meals,
     int? cardIndexHome,
-    double? ratingStars,
     String? searchQuery,
     List<String>? filters,
     int? index,
     List<MealCategory>? mealCategoryModel,
+    double? ratingStars,
+    ViewStatus? status,
+    String? errorMessage,
   }) {
     return HomeState(
       mealCategoryModel: mealCategoryModel ?? this.mealCategoryModel,
@@ -45,8 +53,10 @@ final class HomeState extends Equatable {
       searchQuery: searchQuery ?? this.searchQuery,
       meals: meals ?? this.meals,
       cardIndexHome: cardIndexHome ?? this.cardIndexHome,
-      ratingStar: ratingStars ?? this.ratingStar,
       index: index ?? this.index,
+      ratingStars: ratingStars ?? this.ratingStars,
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }

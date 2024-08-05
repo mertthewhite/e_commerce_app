@@ -1,7 +1,7 @@
 import 'package:e_commerce/feature/bottom_nav/mixin/bottom_nav_mixin.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
-import 'package:e_commerce/product/state/container/product_state_items.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBuilder extends StatefulWidget {
@@ -18,22 +18,14 @@ class _BottomNavBuilderState extends State<BottomNavBuilder>
     return ListenableBuilder(
       listenable: tabContext,
       builder: (_, __) => BottomNavigationBar(
-        elevation: 0,
+        elevation: NumberConstants.zero,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFF53B175),
-        unselectedItemColor: Color(0xFF181725),
+        unselectedItemColor: ColorConstants.blackColor,
+        selectedItemColor: ColorConstants.lightGreenColor,
+        selectedLabelStyle: context.textTheme.labelSmall,
+        unselectedLabelStyle: context.textTheme.labelSmall,
         items: bottomNavigationBarItemList,
         currentIndex: tabContext.index,
-        selectedLabelStyle: context.textTheme.headlineLarge?.copyWith(
-          color: Color(0xFF53B175),
-          fontFamily: "Gilroy",
-          fontSize: 12,
-        ),
-        unselectedLabelStyle: context.textTheme.headlineLarge?.copyWith(
-          color: Color(0xff181725),
-          fontFamily: "Gilroy",
-          fontSize: 12,
-        ),
         onTap: (index) {
           tabContext.setIndex(index);
           onTabTapped(index, context);

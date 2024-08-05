@@ -1,16 +1,20 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/home/data/models/category/category_model.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/data/remote/product_remote_datasource.dart';
+import 'package:e_commerce/product/database/hive/constants/hive_database_constants.dart';
+import 'package:e_commerce/product/utility/enums/view_status.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final cartBox = Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
+
   final GeneralRepository repository;
   HomeBloc(this.repository) : super(HomeState()) {
     on<FetchAllMeals>(_onFetchAllMeals);
@@ -18,7 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       cardIndexHome(event, emit, event.cardIndexHome);
     });
     on<RatingStars>((event, emit) {
-      ratingStars(event, emit, event.ratingStars);
+      _onRatingStars(event, emit, event.ratingStars);
     });
     on<SearchQueryChanged>(_searchQueryChanged);
     on<FilterMealsEvent>(_updateFAllProducFilter);
@@ -63,16 +67,35 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  void ratingStars(
+  Future<void> _onRatingStars(
     RatingStars event,
     Emitter<HomeState> emit,
     double ratingStars,
-  ) {
-    emit(
-      state.copyWith(
-        ratingStars: event.ratingStars,
-      ),
-    );
+  ) async {
+    try {
+      final cartBox =
+          await Hive.openBox<MealModel>(HiveDatabaseConstants.productModelBox);
+
+      final existingProduct = cartBox.get(event.meal.idMeal);
+      print('Rating Stars: ${event.ratingStars}');
+
+      if (existingProduct != null) {
+        existingProduct.rating = event.ratingStars;
+
+        await cartBox.put(existingProduct.idMeal, existingProduct);
+        print('Rating Stars: ${existingProduct.rating}');
+        print('Rating Stars: ${existingProduct}');
+      } else {
+        event.meal.rating = event.ratingStars;
+        await cartBox.put(event.meal.idMeal, event.meal);
+      }
+
+      emit(
+        state.copyWith(
+          ratingStars: event.ratingStars,
+        ),
+      );
+    } catch (e) {}
   }
 
   void _searchQueryChanged(SearchQueryChanged event, Emitter<HomeState> emit) {

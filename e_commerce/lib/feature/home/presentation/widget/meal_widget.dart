@@ -1,12 +1,24 @@
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/animated_button_container.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MealWidget extends StatelessWidget {
+  const MealWidget({
+    required this.state,
+    required this.model,
+    required this.ingredient,
+    required this.models,
+    required this.hiveManager,
+    required this.price,
+    required this.image,
+    Key? key,
+    this.firstMeasure,
+    this.secondMeasure,
+    this.productName,
+  }) : super(key: key);
   final HomeState state;
   final MealModel model;
   final String ingredient;
@@ -15,20 +27,8 @@ class MealWidget extends StatelessWidget {
   final String? productName;
   final HiveDatabaseManager hiveManager;
   final List<MealModel> models;
-
+  final List<String> image;
   final double price;
-  const MealWidget({
-    Key? key,
-    required this.state,
-    required this.model,
-    required this.ingredient,
-    required this.models,
-    this.firstMeasure,
-    this.secondMeasure,
-    this.productName,
-    required this.hiveManager,
-    required this.price,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class MealWidget extends StatelessWidget {
           );
         },
         child: AnimatedButtonContainer(
+          image: image,
           price: price,
           model: model,
           productName: productName ?? '',

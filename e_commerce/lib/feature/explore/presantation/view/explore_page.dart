@@ -1,14 +1,14 @@
 import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/explore/presantation/view/mixin/explore_mixin.dart';
-import 'package:e_commerce/feature/explore/presantation/widget/explore_page_categor_card.dart';
 import 'package:e_commerce/feature/explore/presantation/widget/explore_header_widget.dart';
-import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/feature/explore/presantation/widget/explore_page_categor_card.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:e_commerce/product/extensions/context_extensions.dart';
-import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -28,43 +28,36 @@ class _ExplorePageState extends State<ExplorePage> with ExploreMixin {
           );
         }
         return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.transparent,
-              title: Text(
-                "Find Products",
-                style: context.textTheme.headlineMedium?.copyWith(
-                  color: const Color(0xFF000000),
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                ),
-              ),
-            ),
+            appBar: const CustomGeneralAppBar(
+                title: 'Explore', showBackButton: false),
             body: SingleChildScrollView(
               child: Padding(
                 padding: context.paddingHorizontalDefault,
                 child: Column(
                   children: [
-                    ExploreHeaderWidget(),
+                    const ExploreHeaderWidget(),
                     Column(
                       children: [
-                        VerticalSpace.small(),
+                        const VerticalSpace.small(),
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 6,
+                          itemCount: NumberConstants.sixInt,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: context.dynamicWidth(0.05),
-                            mainAxisSpacing: context.dynamicHeight(0.01),
-                            childAspectRatio: 0.8,
+                            crossAxisCount: NumberConstants.twoInt,
+                            crossAxisSpacing: context.dynamicWidth(
+                                NumberConstants.zeroPointZeroFive),
+                            mainAxisSpacing: context.dynamicHeight(
+                                NumberConstants.zeroPointZeroOne),
+                            childAspectRatio: NumberConstants.zeroPointEight,
                           ),
                           itemBuilder: (context, index) {
                             return ExplorePageCategorCard(
-                              borderColor:
-                                  colors[index == 0 ? index + 1 : index - 1],
+                              image: image,
+                              borderColor: colors[index == NumberConstants.zero
+                                  ? index + NumberConstants.oneInt
+                                  : index - NumberConstants.oneInt],
                               color: colors[index],
                               onTap: () {
                                 context.push(
@@ -73,26 +66,28 @@ class _ExplorePageState extends State<ExplorePage> with ExploreMixin {
                                     context
                                         .read<ExploreBloc>()
                                         .state
-                                        .mealCategoryModel[index == 1
-                                            ? 9
-                                            : index & index == 4
-                                                ? 8
-                                                : index]
-                                        .strCategory
+                                        .mealCategoryModel[
+                                            index == NumberConstants.oneInt
+                                                ? NumberConstants.nineInt
+                                                : index & index ==
+                                                        NumberConstants.fourInt
+                                                    ? NumberConstants.eightInt
+                                                    : index]
+                                        .strCategory,
                                   ],
                                 );
                               },
                               state: state,
-                              index: index == 1
-                                  ? 9
-                                  : index & index == 4
-                                      ? 8
+                              index: index == NumberConstants.oneInt
+                                  ? NumberConstants.nineInt
+                                  : index & index == NumberConstants.fourInt
+                                      ? NumberConstants.eightInt
                                       : index,
                             );
                           },
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

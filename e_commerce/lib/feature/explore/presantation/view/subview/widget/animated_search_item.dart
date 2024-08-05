@@ -1,21 +1,23 @@
-import 'package:e_commerce/feature/explore/presantation/view/subview/explore_search.dart';
-import 'package:e_commerce/feature/explore/presantation/view/subview/widget/search_info_row.dart';
-import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
-import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
-import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/duration_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-class AnimatedSearchItem extends StatefulWidget {
-  final MealModel meal;
-  final VoidCallback onTap;
+import 'package:e_commerce/feature/explore/presantation/view/subview/widget/search_info_row.dart';
+import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
+import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 
+class AnimatedSearchItem extends StatefulWidget {
   const AnimatedSearchItem({
-    Key? key,
     required this.meal,
     required this.onTap,
-  }) : super(key: key);
+    super.key,
+  });
+  final MealModel meal;
+  final VoidCallback onTap;
 
   @override
   _AnimatedSearchItemState createState() => _AnimatedSearchItemState();
@@ -51,20 +53,20 @@ class _AnimatedSearchItemState extends State<AnimatedSearchItem> {
       child: Padding(
         padding: context.paddingAllLow + context.paddingHorizontalLow,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: DurationConstants.veryShort(),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
+            color: ColorConstants.lightGreyColor,
+            borderRadius: context.borderRadiusCircular10,
           ),
           child: Padding(
-            padding: EdgeInsets.only(right: 30),
+            padding: const EdgeInsets.only(right: NumberConstants.thirty),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     SizedBox(
-                      width: 90,
+                      width: NumberConstants.eighty,
                       child: IngredientThumbnail(
                         cart: false,
                         ingredient: widget.meal.strIngredient2.toString(),
@@ -76,12 +78,7 @@ class _AnimatedSearchItemState extends State<AnimatedSearchItem> {
                       children: [
                         Text(
                           widget.meal.strIngredient2 ?? '',
-                          style: context.textTheme.headlineMedium?.copyWith(
-                            color: const Color(0xFF000000),
-                            fontFamily: "Gilroy",
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
+                          style: context.textTheme.bodySmall?.copyWith(),
                         ),
                         SearchInfoRow(meal: widget.meal),
                       ],
@@ -106,18 +103,21 @@ class _AnimatedSearchItemState extends State<AnimatedSearchItem> {
                   },
                   onTap: widget.onTap,
                   child: AnimatedScale(
-                    scale: _isTapped ? 0.7 : 1.0,
+                    scale: _isTapped
+                        ? NumberConstants.zeroPointSeven
+                        : NumberConstants.one,
                     duration: const Duration(milliseconds: 100),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF53B175),
-                        borderRadius: BorderRadius.circular(14),
+                        color: ColorConstants.lightGreenColor,
+                        borderRadius: context.borderRadiusCircular14,
                       ),
                       child: Padding(
-                        padding: context.paddingAllDefault * 0.8,
+                        padding: context.paddingAllDefault *
+                            NumberConstants.zeroPointEight,
                         child: SvgPicture.asset(
                           'assets/icons/plus.svg',
-                          width: 17,
+                          width: NumberConstants.seventeen,
                         ),
                       ),
                     ),

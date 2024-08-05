@@ -1,24 +1,39 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class IngredientThumbnail extends StatelessWidget {
+final class IngredientThumbnail extends StatelessWidget {
   final String ingredient;
-
   final bool bigImage;
   final bool cart;
-
   final int? index;
 
-  IngredientThumbnail(
-      {required this.ingredient,
-      required this.bigImage,
-      required this.cart,
-      this.index});
+  IngredientThumbnail({
+    required this.ingredient,
+    required this.bigImage,
+    required this.cart,
+    this.index,
+  });
+
+  List<String> image = [
+    'assets/images/banner.png',
+    'assets/images/seafood.png',
+    'assets/images/banner.png',
+    'assets/images/dessert.png',
+    'assets/images/chicken.png',
+    'assets/images/desert.jpeg',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/seafood.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +42,6 @@ class IngredientThumbnail extends StatelessWidget {
 
     String largeImageUrl =
         "https://www.themealdb.com/images/ingredients/$ingredient.png";
-
-    List<String> image = [
-      'assets/images/banner.png',
-      'assets/images/seafood.png',
-      'assets/images/banner.png',
-      'assets/images/dessert.png',
-      'assets/images/chicken.png',
-      'assets/images/desert.jpeg',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-      'assets/images/seafood.png',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-      'assets/images/chicken.png',
-    ];
 
     return Column(
       children: [
@@ -62,7 +59,7 @@ class IngredientThumbnail extends StatelessWidget {
               errorWidget: (context, url, error) => Image.asset(
                     index == null
                         ? image[Random().nextInt(image.length)]
-                        : image[index!],
+                        : image[index ?? 0],
                     width: 100,
                     height: 100,
                   )),

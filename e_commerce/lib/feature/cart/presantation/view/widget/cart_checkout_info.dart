@@ -1,4 +1,5 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CartCheckoutInfo extends StatelessWidget {
@@ -14,43 +15,28 @@ class CartCheckoutInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "By placing an order you agree to our",
-            style: TextStyle(
-              color: Color(0xFF7C7C7C),
-              fontFamily: "Gilroy",
-              fontSize: 12,
+          Text(
+            'By placing an order you agree to our',
+            style: context.textTheme.labelSmall?.copyWith(
+              color: ColorConstants.lightGreyColor,
             ),
           ),
           RichText(
-            text: const TextSpan(
+            text: TextSpan(
               children: <TextSpan>[
                 TextSpan(
                   text: 'Terms ',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Gilroy",
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: context.textTheme.labelSmall,
                 ),
                 TextSpan(
                   text: 'and ',
-                  style: TextStyle(
-                    color: Color(0xFF7C7C7C),
-                    fontFamily: "Gilroy",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: ColorConstants.lightGreyColor,
                   ),
                 ),
                 TextSpan(
                   text: 'Conditions',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Gilroy",
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: context.textTheme.labelSmall,
                 ),
               ],
             ),

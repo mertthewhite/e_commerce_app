@@ -1,8 +1,11 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
+import 'package:e_commerce/feature/home/presentation/view/mixin/meal_search_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,70 +17,19 @@ class MealSearchPage extends StatefulWidget {
   _MealSearchPageState createState() => _MealSearchPageState();
 }
 
-class _MealSearchPageState extends State<MealSearchPage> {
-  List<MealModel> _allMeals = [];
-  List<MealModel> _filteredMeals = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
-  Future<void> _loadData() async {
-    _allMeals = await context.read<HomeBloc>().repository.fetchAllMeals();
-    setState(() {
-      _filteredMeals = [];
-    });
-  }
-
-  void _runFilter(String enteredKeyword) {
-    setState(() {
-      if (enteredKeyword.isEmpty) {
-        _filteredMeals = [];
-      } else {
-        _filteredMeals = _allMeals
-            .where((meal) =>
-                meal.strIngredient2
-                    ?.toLowerCase()
-                    .contains(enteredKeyword.toLowerCase()) ??
-                false)
-            .toList();
-      }
-    });
-  }
-
-  bool _isTapped = false;
+class _MealSearchPageState extends State<MealSearchPage> with MealSearchMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            context.pop(context);
-          },
-        ),
-        title: Text(
-          'Search',
-          style: context.textTheme.headlineMedium?.copyWith(
-            color: const Color(0xFF000000),
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-      ),
+      appBar: const CustomGeneralAppBar(title: 'Search'),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: context.paddingAllDefault,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(80),
               ),
               child: TextField(
                 style: context.textTheme.headlineLarge?.copyWith(
@@ -86,8 +38,8 @@ class _MealSearchPageState extends State<MealSearchPage> {
                 ),
                 textAlignVertical: TextAlignVertical.center,
                 onChanged: (enteredKeyword) {
-                  _runFilter(enteredKeyword);
-                  print(_filteredMeals);
+                  runFilter(enteredKeyword);
+                  print(filteredMeals);
                 },
                 decoration: InputDecoration(
                   hintText: 'Search',
@@ -107,9 +59,9 @@ class _MealSearchPageState extends State<MealSearchPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _filteredMeals.length,
+              itemCount: filteredMeals.length,
               itemBuilder: (context, index) {
-                final meal = _filteredMeals[index];
+                final meal = filteredMeals[index];
                 return InkWell(
                   onTap: () {
                     GoRouter.of(context).push(
@@ -127,7 +79,7 @@ class _MealSearchPageState extends State<MealSearchPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 30,
                           ),
                           child: Row(
@@ -165,17 +117,17 @@ class _MealSearchPageState extends State<MealSearchPage> {
                               GestureDetector(
                                 onTapDown: (_) {
                                   setState(() {
-                                    _isTapped = true;
+                                    isTapped = true;
                                   });
                                 },
                                 onTapUp: (_) {
                                   setState(() {
-                                    _isTapped = false;
+                                    isTapped = false;
                                   });
                                 },
                                 onTapCancel: () {
                                   setState(() {
-                                    _isTapped = false;
+                                    isTapped = false;
                                   });
                                 },
                                 onTap: () {
@@ -184,11 +136,11 @@ class _MealSearchPageState extends State<MealSearchPage> {
                                       .add(AddToHiveCartEvent(meal));
                                 },
                                 child: AnimatedScale(
-                                  scale: _isTapped ? 0.7 : 1.0,
+                                  scale: isTapped ? 0.7 : 1.0,
                                   duration: const Duration(milliseconds: 100),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF53B175),
+                                      color: ColorConstants.lightGreenColor,
                                       borderRadius: BorderRadius.circular(14),
                                     ),
                                     child: Padding(
@@ -230,7 +182,7 @@ class SearchInfoRow extends StatelessWidget {
         Text(
           meal.strMeasure6 ?? '',
           style: const TextStyle(
-            color: Color(0xFF7C7C7C),
+            color: ColorConstants.lightGreyColor,
             fontFamily: "Gilroy-Medium",
             fontWeight: FontWeight.w700,
             fontSize: 12,
@@ -239,7 +191,7 @@ class SearchInfoRow extends StatelessWidget {
         const Text(
           ",",
           style: TextStyle(
-            color: Color(0xFF7C7C7C),
+            color: ColorConstants.lightGreyColor,
             fontFamily: "Gilroy-Medium",
             fontWeight: FontWeight.w700,
             fontSize: 12,
@@ -249,7 +201,7 @@ class SearchInfoRow extends StatelessWidget {
           meal.strMeasure2 ?? '',
           style: context.textTheme.headlineLarge?.copyWith(
             overflow: TextOverflow.ellipsis,
-            color: const Color(0xFF7C7C7C),
+            color: ColorConstants.lightGreyColor,
             fontFamily: "Gilroy-Medium",
             fontWeight: FontWeight.w700,
             fontSize: 12,

@@ -3,6 +3,8 @@ import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +17,7 @@ class AnimatedButtonContainer extends StatefulWidget {
   final MealModel model;
   final String ingredient;
   final double price;
+  final List<String> image;
 
   const AnimatedButtonContainer({
     Key? key,
@@ -24,6 +27,7 @@ class AnimatedButtonContainer extends StatefulWidget {
     required this.ingredient,
     required this.secondMeasure,
     required this.model,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -37,11 +41,12 @@ class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
+      duration: Durations.short4,
       curve: Curves.bounceIn,
-      width: MediaQuery.of(context).size.width * 0.44,
+      width:
+          MediaQuery.of(context).size.width * NumberConstants.zeroPointFourFive,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: context.borderRadiusCircular16,
         border: Border.all(
           color: const Color(0xFFE2E2E2),
         ),
@@ -52,111 +57,137 @@ class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IngredientThumbnail(
-                bigImage: false, ingredient: widget.ingredient, cart: false),
+              bigImage: false,
+              ingredient: widget.ingredient,
+              cart: false,
+            ),
             Text(
-              widget.productName ?? '',
-              style: const TextStyle(
-                color: Color(0xFF181725),
-                fontFamily: "Gilroy-Bold",
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
-                overflow: TextOverflow.ellipsis,
+              widget.productName,
+              style: context.textTheme.bodySmall?.copyWith(
+                fontSize: NumberConstants.eighteen,
               ),
             ),
-            Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    overflow: TextOverflow.ellipsis,
-                    widget.firstMeasure ?? '',
-                    style: const TextStyle(
-                      color: Color(0xFF7C7C7C),
-                      fontFamily: "Gilroy-Medium",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                const Text(
-                  ",",
-                  style: TextStyle(
-                    color: Color(0xFF7C7C7C),
-                    fontFamily: "Gilroy-Medium",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    widget.secondMeasure ?? '',
-                    style: context.textTheme.headlineLarge?.copyWith(
-                      overflow: TextOverflow.ellipsis,
-                      color: const Color(0xFF7C7C7C),
-                      fontFamily: "Gilroy-Medium",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            MealWidgetInfoRow(widget: widget),
             VerticalSpace.xSmall(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "\$${widget.price}",
-                  style: context.textTheme.headlineLarge?.copyWith(
-                    color: const Color(0xFF181725),
-                    fontFamily: "Gilroy",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                ),
-                GestureDetector(
-                  onTapDown: (_) {
-                    setState(() {
-                      _isTapped = true;
-                    });
-                  },
-                  onTapUp: (_) {
-                    setState(() {
-                      _isTapped = false;
-                    });
-                  },
-                  onTapCancel: () {
-                    setState(() {
-                      _isTapped = false;
-                    });
-                  },
-                  onTap: () async {
-                    context
-                        .read<CartBloc>()
-                        .add(AddToHiveCartEvent(widget.model));
-                  },
-                  child: AnimatedScale(
-                    scale: _isTapped ? 0.7 : 1.0,
-                    duration: const Duration(milliseconds: 100),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF53B175),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Padding(
-                        padding: context.paddingAllDefault * 0.8,
-                        child: SvgPicture.asset(
-                          'assets/icons/plus.svg',
-                          width: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            PriceWithAddButton(
+              price: widget.price,
+              model: widget.model,
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class PriceWithAddButton extends StatefulWidget {
+  final double price;
+  final MealModel model;
+
+  const PriceWithAddButton({
+    Key? key,
+    required this.price,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  _PriceWithAddButtonState createState() => _PriceWithAddButtonState();
+}
+
+class _PriceWithAddButtonState extends State<PriceWithAddButton> {
+  bool _isTapped = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "\$${widget.price}",
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(),
+        ),
+        GestureDetector(
+          onTapDown: (_) {
+            setState(() {
+              _isTapped = true;
+            });
+          },
+          onTapUp: (_) {
+            setState(() {
+              _isTapped = false;
+            });
+          },
+          onTapCancel: () {
+            setState(() {
+              _isTapped = false;
+            });
+          },
+          onTap: () async {
+            context.read<CartBloc>().add(AddToHiveCartEvent(widget.model));
+          },
+          child: AnimatedScale(
+            scale: _isTapped
+                ? NumberConstants.zeroPointSeven
+                : NumberConstants.onePointZero,
+            duration: Durations.short4,
+            child: Container(
+              decoration: BoxDecoration(
+                color: ColorConstants.lightGreenColor,
+                borderRadius: context.borderRadiusCircular14,
+              ),
+              child: Padding(
+                padding:
+                    context.paddingAllDefault * NumberConstants.zeroPointNine,
+                child: SvgPicture.asset(
+                  'assets/icons/plus.svg',
+                  width: NumberConstants.seventeen,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MealWidgetInfoRow extends StatelessWidget {
+  const MealWidgetInfoRow({
+    super.key,
+    required this.widget,
+  });
+
+  final AnimatedButtonContainer widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          child: Text(
+            overflow: TextOverflow.ellipsis,
+            widget.firstMeasure,
+            style: context.textTheme.labelSmall?.copyWith(
+              color: ColorConstants.lightGreyColor,
+            ),
+          ),
+        ),
+        Text(
+          ",",
+          style: context.textTheme.labelSmall?.copyWith(
+            color: ColorConstants.lightGreyColor,
+          ),
+        ),
+        Flexible(
+          child: Text(
+            widget.secondMeasure,
+            style: context.textTheme.labelSmall?.copyWith(
+              color: ColorConstants.lightGreyColor,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

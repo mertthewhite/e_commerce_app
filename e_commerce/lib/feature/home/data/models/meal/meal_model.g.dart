@@ -61,6 +61,7 @@ MealModel _$MealModelFromJson(Map<String, dynamic> json) => MealModel(
       strCreativeCommonsConfirmed:
           json['strCreativeCommonsConfirmed'] as String?,
       dateModified: json['dateModified'] as String?,
+      rating: (json['rating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$MealModelToJson(MealModel instance) => <String, dynamic>{
@@ -117,4 +118,5 @@ Map<String, dynamic> _$MealModelToJson(MealModel instance) => <String, dynamic>{
       'strImageSource': instance.strImageSource,
       'strCreativeCommonsConfirmed': instance.strCreativeCommonsConfirmed,
       'dateModified': instance.dateModified,
+      'rating': instance.rating,
     };

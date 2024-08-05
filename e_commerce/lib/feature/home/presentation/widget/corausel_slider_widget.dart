@@ -1,24 +1,23 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
-import 'package:e_commerce/product/utility/gen/assets.gen.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/custom_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CorauselSliderWidget extends StatelessWidget {
+  List<String> items;
+  CarouselController controller;
+
   CorauselSliderWidget({
     required this.controller,
+    required this.items,
     Key? key,
   }) : super(key: key);
 
-  final CarouselController controller;
-
-  List<String> items = [
-    Assets.images.banner2.path,
-    Assets.images.banner3.path,
-    Assets.images.banner4.path,
-  ];
+//dışarı al
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class CorauselSliderWidget extends StatelessWidget {
       controller: controller,
       items: items.map((item) {
         return ClipRRect(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: context.borderRadiusCircular14,
             child: Image.asset(
               item,
               fit: BoxFit.cover,
@@ -41,22 +40,6 @@ class CorauselSliderWidget extends StatelessWidget {
   }
 }
 
-Stack carouselWidget(HomeState state) {
-  return Stack(children: [
-    CorauselSliderWidget(
-      controller: CarouselController(),
-    ),
-    Positioned(
-      left: 0,
-      right: 0,
-      bottom: 5,
-      child: CarouselSliderBulletWidget(
-        state: state,
-      ),
-    ),
-  ]);
-}
-
 class CarouselSliderBulletWidget extends StatelessWidget {
   final HomeState state;
   const CarouselSliderBulletWidget({
@@ -69,34 +52,39 @@ class CarouselSliderBulletWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        for (int i = 0; i < state.meals.length / 9; i++)
+        for (int i = NumberConstants.zeroInt;
+            i < state.meals.length / NumberConstants.nineInt;
+            i++)
           AnimatedContainer(
-            duration: const Duration(milliseconds: 500),
-            width: context.read<HomeBloc>().state.cardIndexHome == i ? 19 : 8,
-            height: 5,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+            duration: Durations.long1,
+            width: context.read<HomeBloc>().state.cardIndexHome == i
+                ? NumberConstants.nineteen
+                : NumberConstants.eight,
+            height: NumberConstants.five,
+            margin:
+                context.paddingHorizontalLow * NumberConstants.zeroPointFive,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: context.borderRadiusCircular8,
               color: context.read<HomeBloc>().state.cardIndexHome == i
-                  ? const Color(0xFF53B175)
+                  ? ColorConstants.lightGreenColor
                   : ColorConstants.greyColor,
               shape: BoxShape.rectangle,
             ),
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
+              duration: Durations.short1,
               child: context.read<HomeBloc>().state.cardIndexHome == i
                   ? Container(
                       key: ValueKey(1),
-                      height: 8,
+                      height: NumberConstants.eight,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xFF53B175),
+                        borderRadius: context.borderRadiusCircular8,
+                        color: ColorConstants.lightGreenColor,
                       ),
                     )
                   : Container(
                       key: ValueKey(2),
-                      width: 8,
-                      height: 8,
+                      width: NumberConstants.eight,
+                      height: NumberConstants.eight,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: ColorConstants.greyColor,

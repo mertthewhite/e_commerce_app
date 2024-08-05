@@ -34,7 +34,7 @@ mixin CartPageMixin on State<CartPage> {
   double getTotalPrice(Map<MealModel, int> addedMeals) {
     double totalPrice = 0.0;
     for (var entry in addedMeals.entries) {
-      totalPrice += (entry.key.price ?? 0) * entry.value;
+      totalPrice += (entry.key.price) * entry.value;
     }
     return totalPrice;
   }

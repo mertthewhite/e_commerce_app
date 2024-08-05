@@ -8,6 +8,7 @@ import 'package:e_commerce/feature/home/presentation/widget/home_page_header.dar
 import 'package:e_commerce/feature/home/presentation/widget/home_page_offer_title.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_search_bar.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,20 +35,36 @@ class _HomePageState extends State<HomePage> with HomeMixin {
                   const VerticalSpace.small(),
                   const HomePageSearchBar(),
                   const VerticalSpace.small(),
-                  carouselWidget(state),
+                  Stack(children: [
+                    CorauselSliderWidget(
+                      controller: controller,
+                      items: items,
+                    ),
+                    Positioned(
+                      left: NumberConstants.zero,
+                      right: NumberConstants.zero,
+                      bottom: NumberConstants.five,
+                      child: CarouselSliderBulletWidget(
+                        state: state,
+                      ),
+                    ),
+                  ]),
                   const VerticalSpace.small(),
                   const HomePageOfferTitle(),
                   const VerticalSpace.small(),
                   HomePageExclusiveOfferRow(
+                    image: image,
                     state: state,
                   ),
                   const VerticalSpace.small(),
                   HomePageBestSallerRow(
+                    image: image,
                     randomIndices: randomIndices,
                     state: state,
                   ),
                   VerticalSpace.small(),
                   HomePageGroceriesRow(
+                    image: image,
                     randomIndex: randomIndices,
                     state: state,
                   ),

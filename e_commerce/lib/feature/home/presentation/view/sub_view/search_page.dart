@@ -1,7 +1,11 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:e_commerce/feature/home/presentation/view/mixin/home_mixin.dart';
+import 'package:e_commerce/feature/home/presentation/view/mixin/search_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,76 +17,18 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
-  List<MealModel> allMeals = [];
-  List<MealModel> filteredMeals = [];
-  bool isLoading = false;
-  bool hasError = false;
-  String errorMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<void> loadData(String search) async {
-    setState(() {
-      isLoading = true;
-      hasError = false;
-    });
-
-    try {
-      final meals =
-          await context.read<HomeBloc>().repository.fetchSearchMeals(search);
-      setState(() {
-        allMeals = meals;
-        filteredMeals = meals;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-        hasError = true;
-        errorMessage = e.toString();
-      });
-    }
-  }
-
-  void _onSearchChanged(String query) {
-    loadData(query);
-  }
-
-  bool _isTapped = false;
-
+class _SearchPageState extends State<SearchPage> with SearchMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            context.pop(context);
-          },
-        ),
-        title: Text(
-          'Search',
-          style: context.textTheme.headlineMedium?.copyWith(
-            color: const Color(0xFF000000),
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-      ),
+      appBar: CustomGeneralAppBar(title: 'Search', showBackButton: true),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: context.paddingAllDefault,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: ColorConstants.containerBackground,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextField(
@@ -91,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
                   fontSize: 16,
                 ),
                 textAlignVertical: TextAlignVertical.center,
-                onChanged: _onSearchChanged,
+                onChanged: onSearchChanged,
                 decoration: InputDecoration(
                   hintText: 'Search',
                   hintStyle: context.textTheme.headlineLarge
@@ -125,6 +71,7 @@ class _SearchPageState extends State<SearchPage> {
                               );
                             },
                             child: MealListItem(
+                              image: image,
                               meal: meal,
                               onAddToCart: (meal) {
                                 context
@@ -146,12 +93,14 @@ class MealListItem extends StatefulWidget {
   final MealModel meal;
   final bool isTapped;
   final Function(MealModel) onAddToCart;
+  final List<String> image;
 
   const MealListItem({
     Key? key,
     required this.meal,
-    this.isTapped = false,
     required this.onAddToCart,
+    required this.image,
+    this.isTapped = false,
   }) : super(key: key);
 
   @override
@@ -231,7 +180,7 @@ class _MealListItemState extends State<MealListItem> {
                   duration: const Duration(milliseconds: 100),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF53B175),
+                      color: ColorConstants.lightGreenColor,
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Padding(
@@ -269,8 +218,7 @@ class SearchInfoRow extends StatelessWidget {
           Text(
             meal.strMeasure6 ?? '',
             style: const TextStyle(
-              color: Color(0xFF7C7C7C),
-              fontFamily: "Gilroy-Medium",
+              color: ColorConstants.lightGreyColor,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
@@ -278,8 +226,7 @@ class SearchInfoRow extends StatelessWidget {
           const Text(
             ",",
             style: TextStyle(
-              color: Color(0xFF7C7C7C),
-              fontFamily: "Gilroy-Medium",
+              color: ColorConstants.lightGreyColor,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
@@ -290,7 +237,7 @@ class SearchInfoRow extends StatelessWidget {
               meal.strMeasure2 ?? '',
               style: context.textTheme.headlineLarge?.copyWith(
                 overflow: TextOverflow.ellipsis,
-                color: const Color(0xFF7C7C7C),
+                color: ColorConstants.lightGreyColor,
                 fontFamily: "Gilroy-Medium",
                 fontWeight: FontWeight.w700,
                 fontSize: 12,

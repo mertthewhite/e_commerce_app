@@ -23,12 +23,6 @@ class ApplicationInitialize {
   Future<void> _initialize() async {
     await EasyLocalization.ensureInitialized();
     await _setRotation();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.black,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
 
     EasyLocalization.logger.enableLevels = [LevelMessages.error];
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

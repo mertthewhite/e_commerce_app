@@ -1,13 +1,9 @@
-import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/explore/presantation/view/explore_page.dart';
-import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 mixin ExploreMixin on State<ExplorePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -34,5 +30,22 @@ mixin ExploreMixin on State<ExplorePage> {
     Color(0xFFF7A593).withOpacity(0.25),
     Color(0xFFF8A44C).withOpacity(0.1),
     Color(0xFF53B175).withOpacity(0.1),
+  ];
+
+  final List<String> image = [
+    'assets/images/banner.png',
+    'assets/images/seafood.png',
+    'assets/images/banner.png',
+    'assets/images/dessert.png',
+    'assets/images/chicken.png',
+    'assets/images/desert.jpeg',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/seafood.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
+    'assets/images/chicken.png',
   ];
 }

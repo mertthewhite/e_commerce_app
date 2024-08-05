@@ -1,23 +1,24 @@
-import 'package:e_commerce/feature/explore/presantation/view/subview/explore_category_detail_page.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/duration_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class AnimatedProductItem extends StatefulWidget {
-  final MealModel meal;
-  final bool isTapped;
-  final VoidCallback onTap;
-
   const AnimatedProductItem({
-    Key? key,
     required this.meal,
     required this.onTap,
     required this.isTapped,
-  }) : super(key: key);
+    super.key,
+  });
+  final MealModel meal;
+  final bool isTapped;
+  final VoidCallback onTap;
 
   @override
   _AnimatedProductItemState createState() => _AnimatedProductItemState();
@@ -36,12 +37,13 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
         );
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: MediaQuery.of(context).size.width * 0.44,
+        duration: DurationConstants.veryShort(),
+        width: MediaQuery.of(context).size.width *
+            NumberConstants.zeroPointFourFive,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: context.borderRadiusCircular16,
           border: Border.all(
-            color: const Color(0xFFE2E2E2),
+            color: ColorConstants.borderGreyColor,
           ),
         ),
         child: Padding(
@@ -50,17 +52,13 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IngredientThumbnail(
-                  cart: false,
-                  ingredient: widget.meal.strIngredient2.toString(),
-                  bigImage: false),
+                cart: false,
+                ingredient: widget.meal.strIngredient2.toString(),
+                bigImage: false,
+              ),
               Text(
                 widget.meal.strIngredient2 ?? '',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  color: const Color(0xFF000000),
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
+                style: context.textTheme.bodySmall?.copyWith(),
               ),
               Row(
                 children: [
@@ -68,20 +66,17 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       widget.meal.strMeasure6 ?? '',
-                      style: const TextStyle(
-                        color: Color(0xFF7C7C7C),
-                        fontFamily: "Gilroy-Medium",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        overflow: TextOverflow.ellipsis,
+                        color: ColorConstants.lightGreyColor,
+                        fontSize: 12,
                       ),
                     ),
                   ),
-                  const Text(
+                  Text(
                     ",",
-                    style: TextStyle(
-                      color: Color(0xFF7C7C7C),
-                      fontFamily: "Gilroy-Medium",
-                      fontWeight: FontWeight.w700,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: ColorConstants.lightGreyColor,
                       fontSize: 12,
                     ),
                   ),
@@ -89,11 +84,9 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       widget.meal.strMeasure2 ?? '',
-                      style: context.textTheme.headlineLarge?.copyWith(
+                      style: context.textTheme.bodySmall?.copyWith(
                         overflow: TextOverflow.ellipsis,
-                        color: const Color(0xFF7C7C7C),
-                        fontFamily: "Gilroy-Medium",
-                        fontWeight: FontWeight.w700,
+                        color: ColorConstants.lightGreyColor,
                         fontSize: 12,
                       ),
                     ),
@@ -131,18 +124,21 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
                     },
                     onTap: widget.onTap,
                     child: AnimatedScale(
-                      scale: _isTapped ? 0.7 : 1.0,
-                      duration: const Duration(milliseconds: 100),
+                      scale: _isTapped
+                          ? NumberConstants.zeroPointSeven
+                          : NumberConstants.one,
+                      duration: DurationConstants.veryShort(),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF53B175),
-                          borderRadius: BorderRadius.circular(14),
+                          color: ColorConstants.lightGreenColor,
+                          borderRadius: context.borderRadiusCircular14,
                         ),
                         child: Padding(
-                          padding: context.paddingAllDefault * 0.8,
+                          padding: context.paddingAllDefault *
+                              NumberConstants.zeroPointEight,
                           child: SvgPicture.asset(
                             'assets/icons/plus.svg',
-                            width: 17,
+                            width: NumberConstants.seventeen,
                           ),
                         ),
                       ),

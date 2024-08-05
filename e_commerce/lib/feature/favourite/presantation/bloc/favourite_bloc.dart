@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/product/database/hive/constants/hive_database_constants.dart';
 import 'package:e_commerce/product/errors/failures/failures.dart';
@@ -12,9 +11,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'favourite_event.dart';
 part 'favourite_state.dart';
 
-final favouritesBox = Hive.box<MealModel>(HiveDatabaseConstants.favouriteBox);
-
 class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
+  final favouritesBox = Hive.box<MealModel>(HiveDatabaseConstants.favouriteBox);
+
   FavouriteBloc() : super(FavouriteState()) {
     on<AddToFavouriteEvent>(_onAddToFavourite);
     on<RemoveFromFavouriteEvent>(_onRemoveFromFavourite);
@@ -25,6 +24,7 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
     on<RemoveHiveFromFavouriteEvent>(_onHiveRemoveFromFavourite);
     on<ClearHiveFavouritesEvent>(_onHivelearFavourites);
     on<LoadFavouritesEvent>(_onLoadFavourites);
+    on<RatingHive>(_onRatingHive);
   }
 
   Future<void> _onAddToCart(
@@ -41,6 +41,34 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
       ));
     } on Failure catch (e) {
       emit(state.copyWith(status: ViewStatus.failure, failure: e));
+    }
+  }
+
+  Future<void> _onRatingHive(
+    RatingHive event,
+    Emitter<FavouriteState> emit,
+  ) async {
+    try {
+      final updatedFavourites = List<MealModel>.from(state.favourites);
+      final index = updatedFavourites
+          .indexWhere((meal) => meal.idMeal == event.favourite.idMeal);
+
+      if (index != -1) {
+        updatedFavourites[index] =
+            updatedFavourites[index].copyWith(rating: event.rating);
+
+        final hiveIndex = favouritesBox.values
+            .toList()
+            .indexWhere((meal) => meal.idMeal == event.favourite.idMeal);
+
+        if (hiveIndex != -1) {
+          favouritesBox.putAt(hiveIndex, updatedFavourites[index]);
+        }
+
+        emit(state.copyWith(favourites: updatedFavourites));
+      }
+    } catch (e) {
+      emit(state.copyWith(status: ViewStatus.failure));
     }
   }
 
@@ -162,5 +190,11 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
   ) {
     favouritesBox.clear();
     emit(state.copyWith(status: ViewStatus.loading, favourites: []));
+  }
+
+  void clearFavourites(Box favouritesBox, FavouriteBloc bloc) {
+    favouritesBox.clear();
+
+    bloc.emit(FavouriteState(favourites: []));
   }
 }

@@ -3,6 +3,8 @@ import 'package:e_commerce/feature/cart/presantation/view/widget/counter_button.
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/divider/custom_divider.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +25,12 @@ class CartPageCard extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.05,
-          right: MediaQuery.of(context).size.width * 0.07,
-          top: MediaQuery.of(context).size.height * 0.02,
+          left: MediaQuery.of(context).size.width *
+              NumberConstants.zeroPointZeroSeven,
+          right: MediaQuery.of(context).size.width *
+              NumberConstants.zeroPointZeroSeven,
+          top: MediaQuery.of(context).size.height *
+              NumberConstants.zeroPointZeroTwo,
         ),
         child: Column(
           children: [
@@ -37,7 +42,8 @@ class CartPageCard extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.27,
+                          width: MediaQuery.of(context).size.width *
+                              NumberConstants.zeroPointTwoFive,
                           child: IngredientThumbnail(
                             cart: true,
                             bigImage: false,
@@ -75,18 +81,14 @@ class CartPageCard extends StatelessWidget {
                           },
                           child: SvgPicture.asset(
                             'assets/icons/cancel.svg',
-                            width: 14.21,
+                            width: NumberConstants.fifteen,
                           ),
                         ),
                         const VerticalSpace.medium(),
                         const VerticalSpace.xxSmall(),
                         Text(
                           "\$${meal.price}",
-                          style: context.textTheme.headlineLarge?.copyWith(
-                              color: const Color(0xFF181725),
-                              fontFamily: "Gilroy-Bold",
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16),
+                          style: context.textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -95,10 +97,7 @@ class CartPageCard extends StatelessWidget {
               ],
             ),
             const VerticalSpace.small(),
-            const Divider(
-              color: Color(0xffE2E2E2),
-              thickness: 1,
-            ),
+            const CustomDivider(),
           ],
         ),
       ),

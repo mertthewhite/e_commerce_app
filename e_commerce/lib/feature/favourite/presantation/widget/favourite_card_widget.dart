@@ -1,6 +1,11 @@
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
+import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/widget/divider/custom_divider.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
+import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +34,8 @@ class FavouriteCard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: context.dynamicWidth(0.27),
+                    width:
+                        context.dynamicWidth(NumberConstants.zeroPointTwoFive),
                     child: IngredientThumbnail(
                       cart: false,
                       bigImage: false,
@@ -37,58 +43,46 @@ class FavouriteCard extends StatelessWidget {
                           favouriteMeal[index].strIngredient2.toString(),
                     ),
                   ),
-                  SizedBox(
-                    width: context.dynamicWidth(0.02),
-                  ),
+                  HorizontalSpace.xSmall(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: context.dynamicWidth(0.4),
+                        width:
+                            context.dynamicWidth(NumberConstants.zeroPointFour),
                         child: Row(
                           children: [
                             Flexible(
                               child: Text(
                                 overflow: TextOverflow.ellipsis,
                                 favouriteMeal[index].strIngredient2.toString(),
-                                style:
-                                    context.textTheme.headlineMedium?.copyWith(
-                                  color: const Color(0xFF000000),
-                                  fontFamily: "Gilroy",
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
+                                style: context.textTheme.bodyMedium?.copyWith(),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: context.dynamicHeight(0.01),
-                      ),
+                      VerticalSpace.xxSmall(),
                       Container(
-                        width: context.dynamicWidth(0.4),
+                        width:
+                            context.dynamicWidth(NumberConstants.zeroPointFour),
                         child: Row(
                           children: [
                             Flexible(
                               child: Text(
                                 favouriteMeal[index].strMeasure6 ?? '',
-                                style: const TextStyle(
-                                  color: Color(0xFF7C7C7C),
-                                  fontFamily: "Gilroy",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
+                                style: context.textTheme.labelSmall?.copyWith(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: ColorConstants.lightGreyColor,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const Text(
+                            Text(
                               ",",
-                              style: TextStyle(
-                                color: Color(0xFF7C7C7C),
-                                fontFamily: "Gilroy",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                overflow: TextOverflow.ellipsis,
+                                color: ColorConstants.lightGreyColor,
                               ),
                             ),
                             Flexible(
@@ -96,13 +90,9 @@ class FavouriteCard extends StatelessWidget {
                                 child: Text(
                                   overflow: TextOverflow.ellipsis,
                                   favouriteMeal[index].strMeasure2 ?? '',
-                                  style:
-                                      context.textTheme.headlineLarge?.copyWith(
+                                  style: context.textTheme.labelSmall?.copyWith(
                                     overflow: TextOverflow.ellipsis,
-                                    color: const Color(0xFF7C7C7C),
-                                    fontFamily: "Gilroy-Medium",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
+                                    color: ColorConstants.lightGreyColor,
                                   ),
                                 ),
                               ),
@@ -114,39 +104,48 @@ class FavouriteCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    "\$${favouriteMeal[index].price}",
-                    style: context.textTheme.headlineLarge?.copyWith(
-                      color: const Color(0xFF181725),
+                  Row(
+                    children: [
+                      Text(
+                        "\$${favouriteMeal[index].price}",
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF181725),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          /*context
+                          .read<FavouriteBloc>()
+                          .add(RemoveFromFavouriteEvent(favouriteMeal[index]));*/
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: ColorConstants.blackColor,
+                          size: NumberConstants.twentyfive,
+                        ),
+                      ),
+                    ],
+                  ),
+                  /*Text(
+                    "rating : ${context.read<FavouriteBloc>().state.favourites}",
+                    style: context.textTheme.headlineMedium?.copyWith(
+                      color: ColorConstants.lightGreyColor,
                       fontFamily: "Gilroy",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      /*context
-                      .read<FavouriteBloc>()
-                      .add(RemoveFromFavouriteEvent(favouriteMeal[index]));*/
-                    },
-                    icon: const Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.black,
-                      size: 25,
-                    ),
-                  ),
+                  )*/
                 ],
               ),
             ],
           ),
           Padding(
             padding: context.paddingHorizontalDefault,
-            child: const Divider(
-              color: Color(0xffE2E2E2),
-              thickness: 1,
-            ),
+            child: const CustomDivider(),
           ),
         ],
       ),
