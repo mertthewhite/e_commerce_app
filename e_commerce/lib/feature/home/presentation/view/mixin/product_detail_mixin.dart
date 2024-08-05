@@ -9,6 +9,8 @@ mixin ProductDetailMixin on State<ProductDetailPage> {
     context.read<FavouriteBloc>().add(LoadFavouritesEvent());
   }
 
+  bool isExpanded = false;
+
   List<String> image = [
     'assets/images/banner.png',
     'assets/images/seafood.png',

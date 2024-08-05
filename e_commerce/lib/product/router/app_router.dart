@@ -10,7 +10,6 @@ import 'package:e_commerce/feature/favourite/presantation/view/favourite_page.da
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/view/sub_view/all_product_page.dart';
-import 'package:e_commerce/feature/home/presentation/view/sub_view/meal_search_page.dart';
 import 'package:e_commerce/feature/home/presentation/view/sub_view/product_detail_page.dart';
 import 'package:e_commerce/feature/landing/presantation/view/landing_page.dart';
 import 'package:e_commerce/feature/onboarding/presantation/view/onboarding_page.dart';
@@ -157,29 +156,6 @@ class AppRouter {
         path: '/all_product_page',
         builder: (context, state) {
           return const AllProductPage();
-        },
-      ),
-      GoRoute(
-        path: '/meal_search_page',
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-            child: MealSearchPage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = Offset(0.0, 1.0);
-              const end = Offset.zero;
-              const curve = Curves.fastEaseInToSlowEaseOut;
-
-              var tween = Tween(begin: begin, end: end);
-              var curvedAnimation = CurvedAnimation(
-                parent: animation,
-                curve: curve,
-              );
-              var offsetAnimation = tween.animate(curvedAnimation);
-
-              return SlideTransition(position: offsetAnimation, child: child);
-            },
-          );
         },
       ),
       GoRoute(
