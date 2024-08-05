@@ -36,9 +36,8 @@ class CustomGeneralAppButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          height: height ??
-              context.dynamicHeight(NumberConstants.zeroPointZeroNine),
-          width: width ?? context.dynamicWidth(NumberConstants.zeroPointNine),
+          height: context.dynamicHeight(NumberConstants.zeroPointZeroNine),
+          width: context.dynamicWidth(NumberConstants.zeroPointNineFive),
           decoration: BoxDecoration(
               color: color ?? ColorConstants.lightGreenColor,
               borderRadius: radius ?? context.borderRadiusCircular18),
@@ -48,8 +47,7 @@ class CustomGeneralAppButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                    width:
-                        context.dynamicWidth(NumberConstants.zeroPointOneFive)),
+                    width: context.dynamicWidth(NumberConstants.zeroPointOne)),
                 Center(
                   child: Text(
                     buttonText,

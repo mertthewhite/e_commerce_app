@@ -1,3 +1,6 @@
+import 'package:e_commerce/product/utility/constants/duration_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/utility/size/index.dart';
 import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +17,7 @@ import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
+import 'package:e_commerce/product/utility/gen/assets.gen.dart' as gen;
 
 class AllProductPage extends StatefulWidget {
   const AllProductPage({super.key});
@@ -49,10 +53,10 @@ class _AllProductPageState extends State<AllProductPage> with AllProductMixin {
             child: GridView.builder(
               scrollDirection: Axis.vertical,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 10,
-                crossAxisCount: 2,
-                mainAxisSpacing: 19,
-                childAspectRatio: 0.63,
+                crossAxisSpacing: NumberConstants.ten,
+                crossAxisCount: NumberConstants.twoInt,
+                mainAxisSpacing: NumberConstants.nineteen,
+                childAspectRatio: NumberConstants.zeroPointSix,
               ),
               itemCount: filteredMeals.length,
               itemBuilder: (context, index) {
@@ -99,12 +103,12 @@ class _ProductCardState extends State<ProductCard> {
         );
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: MediaQuery.of(context).size.width * 0.44,
+        duration: DurationConstants.veryShort(),
+        width: context.width * NumberConstants.zeroPointFourFive,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: context.borderRadiusCircular14,
           border: Border.all(
-            color: const Color(0xFFE2E2E2),
+            color: ColorConstants.borderGreyColor,
           ),
         ),
         child: Padding(
@@ -119,26 +123,18 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Text(
                 meal.strIngredient2 ?? '',
-                style: context.textTheme.headlineMedium?.copyWith(
+                style: context.textTheme.bodyMedium?.copyWith(
                   color: const Color(0xFF000000),
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
                 ),
               ),
               AllProductInfoRow(meal: meal),
-              VerticalSpace.xSmall(),
+              const VerticalSpace.xSmall(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     '\$${meal.price}',
-                    style: context.textTheme.headlineLarge?.copyWith(
-                      color: const Color(0xFF181725),
-                      fontFamily: "Gilroy",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
+                    style: context.textTheme.bodySmall,
                   ),
                   GestureDetector(
                     onTapDown: (_) {
@@ -160,18 +156,21 @@ class _ProductCardState extends State<ProductCard> {
                       context.read<CartBloc>().add(AddToHiveCartEvent(meal));
                     },
                     child: AnimatedScale(
-                      scale: _isTapped ? 0.7 : 1.0,
-                      duration: const Duration(milliseconds: 100),
+                      scale: _isTapped
+                          ? NumberConstants.zeroPointSeven
+                          : NumberConstants.one,
+                      duration: DurationConstants.veryShort(),
                       child: Container(
                         decoration: BoxDecoration(
                           color: ColorConstants.lightGreenColor,
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: context.borderRadiusCircular14,
                         ),
                         child: Padding(
-                          padding: context.paddingAllDefault * 0.8,
+                          padding: context.paddingAllDefault *
+                              NumberConstants.zeroPointEight,
                           child: SvgPicture.asset(
                             'assets/icons/plus.svg',
-                            width: 17,
+                            width: IconSize.xmedium.value,
                           ),
                         ),
                       ),
@@ -203,33 +202,24 @@ class AllProductInfoRow extends StatelessWidget {
           child: Text(
             overflow: TextOverflow.ellipsis,
             meal.strMeasure6 ?? '',
-            style: const TextStyle(
+            style: context.textTheme.labelSmall?.copyWith(
               color: ColorConstants.lightGreyColor,
-              fontFamily: "Gilroy-Medium",
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
             ),
           ),
         ),
-        const Text(
+        Text(
           ",",
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: context.textTheme.labelSmall?.copyWith(
             color: ColorConstants.lightGreyColor,
-            fontFamily: "Gilroy-Medium",
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
           ),
         ),
         Flexible(
           child: Text(
             meal.strMeasure2 ?? '',
-            style: context.textTheme.headlineLarge?.copyWith(
+            style: context.textTheme.labelSmall?.copyWith(
               overflow: TextOverflow.ellipsis,
               color: ColorConstants.lightGreyColor,
-              fontFamily: "Gilroy-Medium",
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
             ),
           ),
         ),
@@ -250,9 +240,8 @@ class ActionShowModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onFilterTap,
-      child: SvgPicture.asset(
-        'assets/icons/filter.svg',
-        width: 20,
+      child: gen.Assets.icons.filter.svg(
+        width: IconSize.xmedium.value,
       ),
     );
   }
@@ -296,7 +285,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: context.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -331,7 +320,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               const VerticalSpace.small(),
               Container(
-                height: MediaQuery.of(context).size.height * 0.87,
+                height: context.height * 0.87,
                 decoration: const BoxDecoration(
                   color: ColorConstants.containerBackground,
                   borderRadius: BorderRadius.only(

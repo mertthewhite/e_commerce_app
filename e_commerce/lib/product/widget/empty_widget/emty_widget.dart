@@ -23,8 +23,7 @@ class CustomEmtyWidget extends StatelessWidget {
             isFavourite
                 ? 'assets/lottie/unfound_general.json'
                 : 'assets/lottie/unfound.json',
-            width: MediaQuery.of(context).size.width *
-                NumberConstants.zeroPointEight,
+            width: context.width * NumberConstants.zeroPointEight,
           ),
           isFavourite
               ? VerticalSpace.xLarge()

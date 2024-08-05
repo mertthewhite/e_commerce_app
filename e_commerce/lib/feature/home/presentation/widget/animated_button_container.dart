@@ -43,8 +43,7 @@ class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
     return AnimatedContainer(
       duration: Durations.short4,
       curve: Curves.bounceIn,
-      width:
-          MediaQuery.of(context).size.width * NumberConstants.zeroPointFourFive,
+      width: context.width * NumberConstants.zeroPointFourFive,
       decoration: BoxDecoration(
         borderRadius: context.borderRadiusCircular16,
         border: Border.all(

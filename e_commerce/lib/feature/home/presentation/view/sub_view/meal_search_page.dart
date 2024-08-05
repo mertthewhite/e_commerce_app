@@ -1,6 +1,4 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/view/mixin/meal_search_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
@@ -13,6 +11,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MealSearchPage extends StatefulWidget {
+  const MealSearchPage({super.key});
+
   @override
   _MealSearchPageState createState() => _MealSearchPageState();
 }

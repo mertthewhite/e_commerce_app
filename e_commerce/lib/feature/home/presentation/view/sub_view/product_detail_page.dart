@@ -1,13 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/view/mixin/product_detail_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/button/custom_general_app_button.dart';
 import 'package:e_commerce/product/widget/divider/custom_divider.dart';
@@ -15,8 +14,6 @@ import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart'
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart' as rate;
 import 'package:go_router/go_router.dart';
 import 'package:like_button/like_button.dart';
@@ -35,7 +32,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     with ProductDetailMixin {
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         setState(() {
@@ -54,32 +50,30 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               ),
               child: Column(
                 children: [
-                  mediaQuery.size.height > 800
-                      ? VerticalSpace.medium()
-                      : VerticalSpace.xSmall(),
-                  VerticalSpace.small(),
-                  Container(
-                    child: Padding(
-                      padding: context.paddingAllDefault,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              context.pop();
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              size: 24,
-                            ),
+                  if (context.height > 800)
+                    const VerticalSpace.medium()
+                  else
+                    const VerticalSpace.xSmall(),
+                  const VerticalSpace.small(),
+                  Padding(
+                    padding: context.paddingAllDefault,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                            size: NumberConstants.twentyfive,
                           ),
-                          SvgPicture.asset(
-                            Assets.icons.export.path,
-                            width: 24,
-                            height: 24,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Assets.icons.export.svg(
+                          width: NumberConstants.twentyfive,
+                          height: NumberConstants.twentyfive,
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -103,7 +97,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     padding: context.paddingAllDefault * 1.5,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ProductDetailFavRow(context),
                         const VerticalSpace.small(),
@@ -111,7 +104,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                           meal: widget.selectedProduct,
                         ),
                         const VerticalSpace.small(),
-                        CustomDivider(),
+                        const CustomDivider(),
                         _ProductDetail(context),
                         const CustomDivider(),
                         _ProductDetailNutritions(context),
@@ -122,15 +115,15 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             onTap: () {
                               if (context.read<HomeBloc>().state.index == 0) {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  backgroundColor: const Color(0xffF3603F),
+                                    .showSnackBar(const SnackBar(
+                                  backgroundColor: Color(0xffF3603F),
                                   content: Center(
                                       child: Text('Please add some quantity')),
                                   duration: Duration(seconds: 1),
                                 ));
                               } else {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
+                                    .showSnackBar(const SnackBar(
                                   backgroundColor:
                                       ColorConstants.lightGreenColor,
                                   content: Center(child: Text('Added to cart')),
@@ -273,17 +266,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     Icons.star,
                     color: color,
                   ),
-                  starCount: 5,
-                  starSize: 20,
-                  maxValue: 5,
-                  starSpacing: 2,
-                  maxValueVisibility: true,
                   valueLabelVisibility: false,
                   animationDuration: const Duration(milliseconds: 1000),
-                  valueLabelPadding:
-                      const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-                  valueLabelMargin: const EdgeInsets.only(right: 8),
-                  starOffColor: const Color(0xffe7e8ea),
                   starColor: const Color(0xffF3603F),
                 ),
                 InkWell(

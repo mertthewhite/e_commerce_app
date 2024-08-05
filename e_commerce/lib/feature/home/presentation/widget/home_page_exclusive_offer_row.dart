@@ -26,8 +26,7 @@ class HomePageExclusiveOfferRow extends StatelessWidget {
           crossAxisSpacing: NumberConstants.ten,
           crossAxisCount: NumberConstants.oneInt,
           mainAxisSpacing: NumberConstants.sixteen,
-          childAspectRatio:
-              MediaQuery.of(context).size.height < 730 ? 1.5 : 1.78,
+          childAspectRatio: context.height < 730 ? 1.5 : 1.78,
         ),
         itemCount: state.meals.length > NumberConstants.ten
             ? NumberConstants.fiveInt

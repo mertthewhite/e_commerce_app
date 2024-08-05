@@ -5,6 +5,8 @@ enum IconSize {
   small(10),
   //size is [15]
   smallX(15),
+  //size is [20]
+  xmedium(20),
   //size is [25]
   medium(25),
   //size is [50]

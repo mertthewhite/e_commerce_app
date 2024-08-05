@@ -67,8 +67,7 @@ class HomePageGroceriesRow extends StatelessWidget {
                 : state.meals.length,
             itemBuilder: (context, index) {
               return Container(
-                width: MediaQuery.of(context).size.width *
-                    NumberConstants.zeroPointFourFive,
+                width: context.width * NumberConstants.zeroPointFourFive,
                 decoration: BoxDecoration(
                   color: Color(0xffF8A44C)
                       .withOpacity(NumberConstants.zeroPointTwoFive),
@@ -111,8 +110,7 @@ class HomePageGroceriesRow extends StatelessWidget {
               crossAxisSpacing: NumberConstants.ten,
               crossAxisCount: NumberConstants.oneInt,
               mainAxisSpacing: NumberConstants.sixteen,
-              childAspectRatio:
-                  MediaQuery.of(context).size.height < 730 ? 1.5 : 1.78,
+              childAspectRatio: context.height < 730 ? 1.5 : 1.78,
             ),
             itemCount: state.meals.length > NumberConstants.ten
                 ? NumberConstants.fiveInt

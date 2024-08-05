@@ -12,10 +12,9 @@ class HomePageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
     return Column(
       children: [
-        if (mediaQuery.size.height < 700)
+        if (context.height < 700)
           const VerticalSpace.small()
         else
           const VerticalSpace.medium(),

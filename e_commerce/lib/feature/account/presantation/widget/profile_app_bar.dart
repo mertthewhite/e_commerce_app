@@ -1,9 +1,9 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProfileAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String name;
@@ -55,10 +55,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                     ),
                     const HorizontalSpace.xxSmall(),
                     GestureDetector(
-                      onTap: widget.onEditTap,
-                      child: SvgPicture.asset('assets/icons/pencil.svg',
-                          width: NumberConstants.fifteen),
-                    ),
+                        onTap: widget.onEditTap,
+                        child: Assets.icons.pencil.svg()),
                   ],
                 ),
                 Text(

@@ -38,8 +38,7 @@ class _AnimatedProductItemState extends State<AnimatedProductItem> {
       },
       child: AnimatedContainer(
         duration: DurationConstants.veryShort(),
-        width: MediaQuery.of(context).size.width *
-            NumberConstants.zeroPointFourFive,
+        width: context.width * NumberConstants.zeroPointFourFive,
         decoration: BoxDecoration(
           borderRadius: context.borderRadiusCircular16,
           border: Border.all(

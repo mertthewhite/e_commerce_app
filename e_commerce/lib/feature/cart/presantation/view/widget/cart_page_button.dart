@@ -1,5 +1,6 @@
 import 'package:e_commerce/feature/cart/presantation/view/widget/cart_bottom_sheet.dart';
 import 'package:e_commerce/feature/cart/presantation/view/widget/custom_general_app_button.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,9 @@ class CartPageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom:
-          MediaQuery.of(context).size.height * NumberConstants.zeroPointZeroTwo,
-      left:
-          MediaQuery.of(context).size.width * NumberConstants.zeroPointZeroFive,
-      right:
-          MediaQuery.of(context).size.width * NumberConstants.zeroPointZeroFive,
+      bottom: context.height * NumberConstants.zeroPointZeroFive,
+      left: context.height * NumberConstants.zeroPointZeroFive,
+      right: context.width * NumberConstants.zeroPointZeroFive,
       child: CustomGeneralAppButton(
         buttonText: "Go To Checkout",
         onTap: () {

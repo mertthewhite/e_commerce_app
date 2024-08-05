@@ -3,6 +3,7 @@ import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.da
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
+import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,23 +33,20 @@ class FavouriteDetailButton extends StatelessWidget {
           print(context.read<FavouriteBloc>().state.favourites);
         },
         child: Container(
-          height: context.dynamicHeight(0.09),
-          width: context.dynamicWidth(0.89),
+          height: context.dynamicHeight(NumberConstants.zeroPointZeroNine),
+          width: context.dynamicWidth(NumberConstants.zeroPointEightFive),
           decoration: BoxDecoration(
             color: ColorConstants.lightGreenColor,
-            borderRadius: BorderRadius.circular(19),
+            borderRadius: context.borderRadiusCircular18,
           ),
           child: Padding(
-            padding:
-                context.paddingAllDefault + context.paddingVerticalLow * 0.7,
+            padding: context.paddingAllDefault +
+                context.paddingVerticalLow * NumberConstants.zeroPointSeven,
             child: Center(
               child: Text(
                 "Add All To Cart",
-                style: context.textTheme.headlineLarge?.copyWith(
+                style: context.textTheme.bodyMedium?.copyWith(
                   color: Colors.white,
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
                 ),
               ),
             ),

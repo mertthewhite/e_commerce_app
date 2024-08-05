@@ -1,10 +1,10 @@
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
+import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/button/custom_general_app_button.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class CartPageAccepted extends StatefulWidget {
@@ -23,18 +23,12 @@ class _CartPageAcceptedState extends State<CartPageAccepted> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(
-                right: context.dynamicWidth(
-                  NumberConstants.zeroPointZeroSix,
+                padding: EdgeInsets.only(
+                  right: context.dynamicWidth(
+                    NumberConstants.zeroPointZeroSix,
+                  ),
                 ),
-              ),
-              child: SvgPicture.asset(
-                "assets/images/cart_background.svg",
-                width: context.dynamicWidth(
-                  NumberConstants.zeroPointEight,
-                ),
-              ),
-            ),
+                child: Assets.images.cartBackground.svg()),
             const VerticalSpace.medium(),
             Text(
               textAlign: TextAlign.center,

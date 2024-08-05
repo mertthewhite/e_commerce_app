@@ -25,12 +25,9 @@ class CartPageCard extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width *
-              NumberConstants.zeroPointZeroSeven,
-          right: MediaQuery.of(context).size.width *
-              NumberConstants.zeroPointZeroSeven,
-          top: MediaQuery.of(context).size.height *
-              NumberConstants.zeroPointZeroTwo,
+          left: context.width * NumberConstants.zeroPointZeroSeven,
+          right: context.width * NumberConstants.zeroPointZeroSeven,
+          top: context.height * NumberConstants.zeroPointZeroTwo,
         ),
         child: Column(
           children: [
@@ -42,8 +39,8 @@ class CartPageCard extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width *
-                              NumberConstants.zeroPointTwoFive,
+                          width:
+                              context.width * NumberConstants.zeroPointTwoFive,
                           child: IngredientThumbnail(
                             cart: true,
                             bigImage: false,

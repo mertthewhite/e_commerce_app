@@ -1,6 +1,4 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/mixin/home_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/view/mixin/search_mixin.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
@@ -21,7 +19,7 @@ class _SearchPageState extends State<SearchPage> with SearchMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomGeneralAppBar(title: 'Search', showBackButton: true),
+      appBar: const CustomGeneralAppBar(title: 'Search', showBackButton: true),
       body: Column(
         children: [
           Padding(
@@ -29,24 +27,22 @@ class _SearchPageState extends State<SearchPage> with SearchMixin {
             child: Container(
               decoration: BoxDecoration(
                 color: ColorConstants.containerBackground,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: context.borderRadiusCircular10,
               ),
               child: TextField(
-                style: context.textTheme.headlineLarge?.copyWith(
-                  color: const Color(0xFF000000),
-                  fontSize: 16,
-                ),
+                style: context.textTheme.bodySmall,
                 textAlignVertical: TextAlignVertical.center,
                 onChanged: onSearchChanged,
                 decoration: InputDecoration(
                   hintText: 'Search',
-                  hintStyle: context.textTheme.headlineLarge
-                      ?.copyWith(color: const Color(0xFFA1A1A1), fontSize: 16),
+                  hintStyle: context.textTheme.bodySmall?.copyWith(
+                    color: ColorConstants.lightGreyColor,
+                  ),
                   prefixIcon: Padding(
                     padding: context.paddingAllDefault,
                     child: SvgPicture.asset(
                       'assets/icons/search.svg',
-                      color: const Color(0xFFA1A1A1),
+                      color: ColorConstants.lightGreyColor,
                     ),
                   ),
                   border: InputBorder.none,
@@ -56,9 +52,13 @@ class _SearchPageState extends State<SearchPage> with SearchMixin {
           ),
           Expanded(
             child: isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
                 : hasError
-                    ? Center(child: Text('Error: $errorMessage'))
+                    ? Center(
+                        child: Text('Error: $errorMessage'),
+                      )
                     : ListView.builder(
                         itemCount: filteredMeals.length,
                         itemBuilder: (context, index) {
@@ -73,7 +73,7 @@ class _SearchPageState extends State<SearchPage> with SearchMixin {
                             child: MealListItem(
                               image: image,
                               meal: meal,
-                              onAddToCart: (meal) {
+                              onTap: (meal) {
                                 context
                                     .read<CartBloc>()
                                     .add(AddToHiveCartEvent(meal));
@@ -90,18 +90,17 @@ class _SearchPageState extends State<SearchPage> with SearchMixin {
 }
 
 class MealListItem extends StatefulWidget {
-  final MealModel meal;
-  final bool isTapped;
-  final Function(MealModel) onAddToCart;
-  final List<String> image;
-
   const MealListItem({
     Key? key,
     required this.meal,
-    required this.onAddToCart,
+    required this.onTap,
     required this.image,
     this.isTapped = false,
   }) : super(key: key);
+  final MealModel meal;
+  final bool isTapped;
+  final void Function(MealModel)? onTap;
+  final List<String> image;
 
   @override
   _MealListItemState createState() => _MealListItemState();
@@ -173,7 +172,7 @@ class _MealListItemState extends State<MealListItem> {
                   });
                 },
                 onTap: () {
-                  widget.onAddToCart(widget.meal);
+                  widget.onTap?.call(widget.meal);
                 },
                 child: AnimatedScale(
                   scale: _isTapped ? 0.7 : 1.0,

@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CorauselSliderWidget extends StatelessWidget {
-  List<String> items;
-  CarouselController controller;
+  final List<String> items;
+  final CarouselController controller;
 
   CorauselSliderWidget({
     required this.controller,
@@ -29,7 +29,7 @@ class CorauselSliderWidget extends StatelessWidget {
             child: Image.asset(
               item,
               fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
+              width: context.width,
             ));
       }).toList(),
       autoPlay: true,

@@ -1,5 +1,4 @@
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/meal_widget.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
@@ -56,8 +55,7 @@ class HomePageBestSallerRow extends StatelessWidget {
               crossAxisSpacing: NumberConstants.sixteen,
               crossAxisCount: NumberConstants.oneInt,
               mainAxisSpacing: NumberConstants.sixteen,
-              childAspectRatio:
-                  MediaQuery.of(context).size.height < 730 ? 1.5 : 1.78,
+              childAspectRatio: context.height < 730 ? 1.5 : 1.78,
             ),
             itemCount: state.meals.length > NumberConstants.ten
                 ? NumberConstants.fiveInt
