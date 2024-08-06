@@ -5,19 +5,19 @@ import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 final class IngredientThumbnail extends StatelessWidget {
+  IngredientThumbnail({
+    required this.ingredient,
+    required this.bigImage,
+    required this.cart,
+    super.key,
+    this.index,
+  });
   final String ingredient;
   final bool bigImage;
   final bool cart;
   final int? index;
 
-  IngredientThumbnail({
-    required this.ingredient,
-    required this.bigImage,
-    required this.cart,
-    this.index,
-  });
-
-  List<String> image = [
+  final List<String> image = [
     'assets/images/banner.png',
     'assets/images/seafood.png',
     'assets/images/banner.png',
@@ -70,9 +70,8 @@ final class IngredientThumbnail extends StatelessWidget {
 }
 
 class IngredientMealThumbnail extends StatelessWidget {
+  IngredientMealThumbnail({required this.ingredient, super.key});
   final String ingredient;
-
-  IngredientMealThumbnail({required this.ingredient});
 
   @override
   Widget build(BuildContext context) {

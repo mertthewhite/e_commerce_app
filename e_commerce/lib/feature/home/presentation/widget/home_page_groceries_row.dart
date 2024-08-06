@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/meal_widget.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';

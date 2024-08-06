@@ -12,9 +12,7 @@ part 'favourite_event.dart';
 part 'favourite_state.dart';
 
 class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
-  final favouritesBox = Hive.box<MealModel>(HiveDatabaseConstants.favouriteBox);
-
-  FavouriteBloc() : super(FavouriteState()) {
+  FavouriteBloc() : super(const FavouriteState()) {
     on<AddToFavouriteEvent>(_onAddToFavourite);
     on<RemoveFromFavouriteEvent>(_onRemoveFromFavourite);
     on<ClearFavouritesEvent>(_onClearFavourites);
@@ -26,6 +24,7 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
     on<LoadFavouritesEvent>(_onLoadFavourites);
     on<RatingHive>(_onRatingHive);
   }
+  final favouritesBox = Hive.box<MealModel>(HiveDatabaseConstants.favouriteBox);
 
   Future<void> _onAddToCart(
     AddToCartFavouriteEvent event,
@@ -192,9 +191,12 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
     emit(state.copyWith(status: ViewStatus.loading, favourites: []));
   }
 
-  void clearFavourites(Box favouritesBox, FavouriteBloc bloc) {
+  void clearFavourites(
+    ClearFavouritesEvent event,
+    Emitter<FavouriteState> emit,
+  ) {
     favouritesBox.clear();
 
-    bloc.emit(FavouriteState(favourites: []));
+    emit(const FavouriteState(favourites: []));
   }
 }

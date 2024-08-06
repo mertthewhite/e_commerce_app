@@ -3,7 +3,6 @@ import 'package:e_commerce/feature/home/presentation/view/mixin/search_mixin.dar
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
-import 'package:e_commerce/product/utility/gen/assets.gen.dart';
 import 'package:e_commerce/product/widget/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';

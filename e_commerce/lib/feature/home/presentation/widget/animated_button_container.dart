@@ -1,6 +1,5 @@
 import 'package:e_commerce/feature/cart/presantation/bloc/cart_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
-import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
@@ -36,8 +35,6 @@ class AnimatedButtonContainer extends StatefulWidget {
 }
 
 class _AnimatedButtonContainerState extends State<AnimatedButtonContainer> {
-  bool _isTapped = false;
-
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(

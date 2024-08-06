@@ -1,6 +1,3 @@
-import 'package:bloc/bloc.dart';
-import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
-import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/landing/presantation/mixin/landing_mixin.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';

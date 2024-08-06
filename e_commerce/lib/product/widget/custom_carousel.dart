@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce/product/extensions/context_extensions.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
   const CarouselSliderWidget({
