@@ -10,46 +10,78 @@ import 'package:hive_flutter/hive_flutter.dart';
 class HiveDatabaseManager {
   Future<void> init() async {
     await Hive.initFlutter();
+
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(MealModelAdapter());
-    }
+    } else {}
 
     await Hive.openBox<MealModel>(HiveDatabaseConstants.productModelBox);
     await Hive.openBox<MealModel>(HiveDatabaseConstants.favouriteBox);
   }
 
+  static final cartBox =
+      Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
+  static final favouriteBox =
+      Hive.box<MealModel>(HiveDatabaseConstants.favouriteBox);
+
+  /// product model box
+  Future<void> allRemoveMealFromHiveBox(String mealId) async {
+    final mealsToRemove =
+        cartBox.values.where((m) => m.idMeal == mealId).toList();
+
+    for (var mealToRemove in mealsToRemove) {
+      final index = cartBox.values.toList().indexOf(mealToRemove);
+      if (index != -1) {
+        await cartBox.deleteAt(index);
+      }
+    }
+  }
+
+  Future<Map<MealModel, int>> getAddedMeals() async {
+    final addedMeals = <MealModel, int>{};
+
+    for (var meal in cartBox.values) {
+      if (addedMeals.containsKey(meal)) {
+        addedMeals[meal] = addedMeals[meal]! + 1;
+      } else {
+        addedMeals[meal] = 1;
+      }
+    }
+
+    return addedMeals;
+  }
+
+  Future<void> addMealToHiveBox(MealModel meal) async {
+    try {
+      await cartBox.add(meal);
+    } catch (e) {
+      print('Hive box\'a eklenirken hata oluştu: $e');
+    }
+  }
+
+  Future<void> clearCart() async {
+    try {
+      await cartBox.clear();
+    } catch (error) {
+      print('Sepet temizlenirken hata oluştu: $error');
+    }
+  }
+
+  Future<void> singleRemoveMealFromHiveBox(MealModel meal) async {
+    try {
+      final index =
+          cartBox.values.toList().indexWhere((m) => m.idMeal == meal.idMeal);
+      if (index != -1) {
+        await cartBox.deleteAt(index);
+      }
+    } catch (e) {
+      print('Hive box\'tan silinirken hata oluştu: $e');
+    }
+  }
+
+  /// product model box
   Future<void> clear() async {
     await Hive.deleteBoxFromDisk(HiveDatabaseConstants.productModelBox);
     await Hive.deleteBoxFromDisk(HiveDatabaseConstants.favouriteBox);
-  }
-
-  Future<Box<MealModel>> get _box async {
-    return Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
-  }
-
-  Future<void> addProduct(MealModel productModel) async {
-    if (productModel == null) {
-      print('Product model is null');
-      return;
-    }
-    final box = await Hive.openBox<MealModel>('cartBox');
-    await box.put(productModel.idMeal, productModel);
-  }
-
-  Future<void> deleteProduct(String idMeal) async {
-    final box = await _box;
-    await box.delete(idMeal);
-  }
-
-  Future<List<MealModel>> getProducts() async {
-    final box = Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
-    return box.values.toList();
-  }
-
-  Future<void> addProducts(List<MealModel> products) async {
-    final box = await _box;
-    for (var product in products) {
-      await box.put(product.idMeal, product);
-    }
   }
 }

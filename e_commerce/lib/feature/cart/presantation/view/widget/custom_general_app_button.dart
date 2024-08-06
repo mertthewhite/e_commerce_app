@@ -58,19 +58,23 @@ class CustomGeneralAppButton extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  width: context.dynamicWidth(NumberConstants.zeroPointOneFive),
                   decoration: BoxDecoration(
                       color: ColorConstants.lightGreyColor,
-                      borderRadius: context.borderRadiusCircular6),
+                      borderRadius: context.borderRadiusCircular12),
                   child: Padding(
-                    padding: context.paddingAllLow,
-                    child: Text(
-                      NumberFormat.currency(
-                              symbol: "\$",
-                              decimalDigits: NumberConstants.twoInt)
-                          .format(context.read<CartBloc>().state.totalPrice),
-                      style: context.textTheme.headlineLarge?.copyWith(
-                          color: textColor ?? Colors.white,
-                          fontSize: textFontsize ?? NumberConstants.ten),
+                    padding:
+                        context.paddingAllLow * NumberConstants.zeroPointFive,
+                    child: Center(
+                      child: Text(
+                        NumberFormat.currency(
+                                symbol: "\$",
+                                decimalDigits: NumberConstants.twoInt)
+                            .format(context.watch<CartBloc>().state.totalPrice),
+                        style: context.textTheme.headlineLarge?.copyWith(
+                            color: textColor ?? Colors.white,
+                            fontSize: textFontsize ?? NumberConstants.ten),
+                      ),
                     ),
                   ),
                 )

@@ -22,14 +22,16 @@ class CounterButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFFE0E0E0)),
-          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: ColorConstants.lightGreyColorDivider),
+          borderRadius: context.borderRadiusCircular16,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: context.paddingAllLow,
           child: Icon(
             icon,
-            color: icon == Icons.add ? Colors.green : const Color(0xffB3B3B3),
+            color: icon == Icons.add
+                ? ColorConstants.lightGreenColor
+                : ColorConstants.lightGreyColor,
           ),
         ),
       ),
@@ -57,17 +59,17 @@ class CartProductCounter extends StatelessWidget {
             context.read<CartBloc>().add(RemoveFromCartEvent(meal));
           },
         ),
-        const SizedBox(width: 12),
-        Text(
-          count.toString(),
-          style: const TextStyle(
-            color: Color(0xFF181725),
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+        SizedBox(
+          width: context.dynamicWidth(NumberConstants.zeroPointZeroTwo),
+        ),
+        SizedBox(
+          width: context.dynamicWidth(NumberConstants.zeroPointZeroSix),
+          child: Text(
+            count.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: context.textTheme.labelMedium,
           ),
         ),
-        const SizedBox(width: 12),
         CounterButton(
           icon: Icons.add,
           onTap: () {
@@ -100,7 +102,7 @@ class CartProductDetail extends StatelessWidget {
                 child: Text(
                   overflow: TextOverflow.ellipsis,
                   meal.strIngredient2.toString(),
-                  style: context.textTheme.bodyMedium?.copyWith(),
+                  style: context.textTheme.bodyMedium,
                 ),
               ),
             ],

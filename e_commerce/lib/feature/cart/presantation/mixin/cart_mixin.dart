@@ -17,20 +17,6 @@ mixin CartPageMixin on State<CartPage> {
     cartBox = Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
   }
 
-  Map<MealModel, int> getAddedMeals() {
-    final addedMeals = <MealModel, int>{};
-
-    for (var meal in cartBox.values) {
-      if (addedMeals.containsKey(meal)) {
-        addedMeals[meal] = addedMeals[meal]! + 1;
-      } else {
-        addedMeals[meal] = 1;
-      }
-    }
-
-    return addedMeals;
-  }
-
   double getTotalPrice(Map<MealModel, int> addedMeals) {
     double totalPrice = 0.0;
     for (var entry in addedMeals.entries) {

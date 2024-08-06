@@ -81,3 +81,8 @@ class TotalPriceUpdatedState extends CartEvent {
   @override
   List<Object> get props => [totalPrice];
 }
+
+class AddedMeals extends CartEvent {
+  @override
+  List<Object> get props => [];
+}

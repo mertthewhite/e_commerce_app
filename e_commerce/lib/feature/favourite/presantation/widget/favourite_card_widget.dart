@@ -1,24 +1,23 @@
 import 'package:e_commerce/feature/favourite/presantation/bloc/favourite_bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/widget/ingredient_thumbnail.dart';
+import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/divider/custom_divider.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_horizontal_spacer.dart';
 import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavouriteCard extends StatelessWidget {
-  final List<MealModel> favouriteMeal;
-  final int index;
-
   const FavouriteCard({
-    Key? key,
+    super.key,
     required this.favouriteMeal,
     required this.index,
-  }) : super(key: key);
+  });
+  final List<MealModel> favouriteMeal;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
