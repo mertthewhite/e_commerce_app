@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
-import 'package:e_commerce/product/database/hive/constants/hive_database_constants.dart';
 import 'package:e_commerce/product/database/hive/core/hive_database_manager.dart';
 import 'package:e_commerce/product/errors/failures/failures.dart';
 import 'package:e_commerce/product/utility/enums/view_status.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
