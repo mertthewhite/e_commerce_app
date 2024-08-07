@@ -1,15 +1,13 @@
 part of 'explore_bloc.dart';
 
-enum ExploreStatus { initial, loading, loaded, error }
-
 final class ExploreState extends Equatable {
   const ExploreState({
-    this.status = ExploreStatus.initial,
-    this.errorMessage = "",
+    this.status = ViewStatus.loading,
+    this.errorMessage = '',
     this.mealCategoryModel = const [],
   });
 
-  final ExploreStatus status;
+  final ViewStatus status;
   final String errorMessage;
   final List<MealCategory> mealCategoryModel;
 
@@ -21,7 +19,7 @@ final class ExploreState extends Equatable {
       ];
 
   ExploreState copyWith({
-    ExploreStatus? status,
+    ViewStatus? status,
     String? errorMessage,
     List<MealCategory>? mealCategoryModel,
   }) {

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 /// [productModelBox] is a [Box] that stores [MealModel] objects.
 
-mixin HiveDatabaseManagerMixin {
+mixin HiveDatabaseManagerProductMixin {
   static final cartBox =
       Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
 

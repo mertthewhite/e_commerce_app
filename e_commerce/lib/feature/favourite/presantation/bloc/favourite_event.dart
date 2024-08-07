@@ -8,18 +8,16 @@ abstract class FavouriteEvent extends Equatable {
 }
 
 class AddToFavouriteEvent extends FavouriteEvent {
-  final MealModel favourite;
-
   const AddToFavouriteEvent(this.favourite);
+  final MealModel favourite;
 
   @override
   List<Object> get props => [favourite];
 }
 
 class RemoveFromFavouriteEvent extends FavouriteEvent {
-  final MealModel favourite;
-
   const RemoveFromFavouriteEvent(this.favourite);
+  final MealModel favourite;
 
   @override
   List<Object> get props => [favourite];
@@ -28,36 +26,32 @@ class RemoveFromFavouriteEvent extends FavouriteEvent {
 class ClearFavouritesEvent extends FavouriteEvent {}
 
 class AddToCartFavouriteEvent extends FavouriteEvent {
-  final List<MealModel> favourite;
-
   const AddToCartFavouriteEvent(this.favourite);
+  final List<MealModel> favourite;
 
   @override
   List<Object> get props => [favourite];
 }
 
 class IndexFavouriteEvent extends FavouriteEvent {
-  final int index;
-
   const IndexFavouriteEvent(this.index);
+  final int index;
 
   @override
   List<Object> get props => [index];
 }
 
 class AddHiveToFavouriteEvent extends FavouriteEvent {
-  final MealModel favourite;
-
   const AddHiveToFavouriteEvent(this.favourite);
+  final MealModel favourite;
 
   @override
   List<Object> get props => [favourite];
 }
 
 class RemoveHiveFromFavouriteEvent extends FavouriteEvent {
-  final MealModel favourite;
-
   const RemoveHiveFromFavouriteEvent(this.favourite);
+  final MealModel favourite;
 
   @override
   List<Object> get props => [favourite];
@@ -68,19 +62,17 @@ class ClearHiveFavouritesEvent extends FavouriteEvent {
 }
 
 class RatingHive extends FavouriteEvent {
+  const RatingHive(this.favourite, this.rating);
   final MealModel favourite;
   final double rating;
-
-  const RatingHive(this.favourite, this.rating);
 
   @override
   List<Object> get props => [favourite, rating];
 }
 
 class LoadRatingEvent extends FavouriteEvent {
-  final MealModel favourite;
-
   const LoadRatingEvent(this.favourite);
+  final MealModel favourite;
 
   @override
   List<Object> get props => [favourite];
