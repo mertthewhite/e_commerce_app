@@ -25,11 +25,9 @@ class ProductDetailReview extends StatelessWidget {
             Row(
               children: [
                 rate.RatingStars(
-                  value: context.watch<HomeBloc>().state.ratingStars,
+                  value: 2,
                   onValueChanged: (v) {
-                    context
-                        .read<HomeBloc>()
-                        .add(RatingStars(v, selectedProduct));
+                    print(v);
                   },
                   starBuilder: (index, color) => Icon(
                     Icons.star,

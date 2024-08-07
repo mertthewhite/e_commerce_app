@@ -18,7 +18,7 @@ class _LandingPageState extends State<LandingPage> with LandingPageMixin {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is AllMealsLoaded && !navigatedNotifier.value) {
+        if (state.meals.isNotEmpty && !navigatedNotifier.value) {
           navigatedNotifier.value = true;
           context.push('/onboarding_page');
         }

@@ -4,61 +4,65 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/home/data/models/category/category_model.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/data/remote/product_remote_datasource.dart';
-import 'package:e_commerce/product/database/hive/constants/hive_database_constants.dart';
 import 'package:e_commerce/product/utility/enums/view_status.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final cartBox = Hive.box<MealModel>(HiveDatabaseConstants.productModelBox);
-
-  final GeneralRepository repository;
-  HomeBloc(this.repository) : super(HomeState()) {
+  HomeBloc(this.repository) : super(const HomeState()) {
     on<FetchAllMeals>(_onFetchAllMeals);
-    on<CardIndexHome>((event, emit) {
-      cardIndexHome(event, emit, event.cardIndexHome);
-    });
-    on<RatingStars>((event, emit) {
-      _onRatingStars(event, emit, event.ratingStars);
-    });
+    on<CardIndexHome>(_cardIndexHome);
     on<SearchQueryChanged>(_searchQueryChanged);
-    on<FilterMealsEvent>(_updateFAllProducFilter);
-    on<UpdatePlusIndex>((event, emit) {
-      _updatePlusIndex(emit, event);
-    });
-    on<UpdateMinusIndex>((event, emit) {
-      _updateMinusIndex(emit, event);
-    });
-    on<UpdateClearIndex>((event, emit) {
-      _updateIndex(emit, event);
-    });
-    on<FetchFilteCategoryMeals>(_onFetcFilterCategory);
+    on<FilterMealsEvent>(_updateFAllProductFilter);
+    on<UpdatePlusIndex>(_updatePlusIndex);
+    on<UpdateMinusIndex>(_updateMinusIndex);
+    on<UpdateClearIndex>(_updateIndex);
   }
 
+  final GeneralRepository repository;
+
   Future<void> _onFetchAllMeals(
-      FetchAllMeals event, Emitter<HomeState> emit) async {
-    emit(const AllMealsLoading());
+    FetchAllMeals event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(
+      status: ViewStatus.loading,
+    ));
     try {
       print('Fetching meals');
       final meals = await repository.fetchAllMeals();
       if (meals.isEmpty) {
-        emit(HomeError('No meals found.'));
+        emit(
+          state.copyWith(
+            status: ViewStatus.failure,
+            errorMessage: 'No meals found.',
+          ),
+        );
       } else {
-        emit(AllMealsLoaded(meals));
+        emit(
+          state.copyWith(
+            status: ViewStatus.success,
+            meals: meals,
+            errorMessage: "success",
+          ),
+        );
       }
     } catch (e) {
       print('Error fetching meals');
-      emit(HomeError(e.toString()));
+      emit(
+        state.copyWith(
+          status: ViewStatus.failure,
+          errorMessage: 'Error fetching meals',
+        ),
+      );
     }
   }
 
-  void cardIndexHome(
+  void _cardIndexHome(
     CardIndexHome event,
     Emitter<HomeState> emit,
-    int cardIndexHome,
   ) {
     emit(
       state.copyWith(
@@ -67,75 +71,51 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  Future<void> _onRatingStars(
-    RatingStars event,
+  void _searchQueryChanged(
+    SearchQueryChanged event,
     Emitter<HomeState> emit,
-    double ratingStars,
-  ) async {
-    try {
-      final cartBox =
-          await Hive.openBox<MealModel>(HiveDatabaseConstants.productModelBox);
-
-      final existingProduct = cartBox.get(event.meal.idMeal);
-      print('Rating Stars: ${event.ratingStars}');
-
-      if (existingProduct != null) {
-        existingProduct.rating = event.ratingStars;
-
-        await cartBox.put(existingProduct.idMeal, existingProduct);
-        print('Rating Stars: ${existingProduct.rating}');
-        print('Rating Stars: ${existingProduct}');
-      } else {
-        event.meal.rating = event.ratingStars;
-        await cartBox.put(event.meal.idMeal, event.meal);
-      }
-
-      emit(
-        state.copyWith(
-          ratingStars: event.ratingStars,
-        ),
-      );
-    } catch (e) {}
+  ) {
+    emit(
+      state.copyWith(
+        searchQuery: event.query,
+        meals: [],
+      ),
+    );
   }
 
-  void _searchQueryChanged(SearchQueryChanged event, Emitter<HomeState> emit) {
-    emit(state.copyWith(searchQuery: event.query, meals: []));
+  void _updateFAllProductFilter(
+    FilterMealsEvent event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(filters: event.filters),
+    );
   }
 
-  void _updateFAllProducFilter(
-      FilterMealsEvent event, Emitter<HomeState> emit) {
-    emit(state.copyWith(filters: event.filters));
+  void _updatePlusIndex(
+    UpdatePlusIndex event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(index: state.index + 1),
+    );
   }
 
-  void _updatePlusIndex(Emitter<HomeState> emit, UpdatePlusIndex event) {
-    emit(state.copyWith(index: state.index + 1));
+  void _updateMinusIndex(
+    UpdateMinusIndex event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(index: state.index - 1),
+    );
   }
 
-  void _updateMinusIndex(Emitter<HomeState> emit, UpdateMinusIndex event) {
-    emit(state.copyWith(index: state.index - 1));
-  }
-
-  void _updateIndex(Emitter<HomeState> emit, UpdateClearIndex event) {
-    emit(state.copyWith(index: 0));
-  }
-
-  Future<void> _onFetcFilterCategory(
-      FetchFilteCategoryMeals event, Emitter<HomeState> emit) async {
-    emit(FilterCategoryLoading());
-    try {
-      print('Fetching Filter');
-      final meal = await repository.fetchFilterCategoryMeal(
-        event.endpoint2,
-      );
-      if (meal.isEmpty) {
-        emit(HomeError('No meals found.'));
-      } else {
-        emit(FilterCategoryLoaded(
-          mealfiltercategory: meal,
-        ));
-      }
-    } catch (e) {
-      emit(HomeError(e.toString()));
-    }
+  void _updateIndex(
+    UpdateClearIndex event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(index: 0),
+    );
   }
 }

@@ -8,7 +8,6 @@ final class HomeState extends Equatable {
     this.filters = const [],
     this.index = 0,
     this.mealCategoryModel = const [],
-    this.ratingStars = 0,
     this.status,
     this.errorMessage,
   });
@@ -19,7 +18,6 @@ final class HomeState extends Equatable {
   final String searchQuery;
   final List<String> filters;
   final int index;
-  final double ratingStars;
   final ViewStatus? status;
   final String? errorMessage;
 
@@ -31,7 +29,6 @@ final class HomeState extends Equatable {
         filters,
         index,
         mealCategoryModel,
-        ratingStars,
         status,
         errorMessage
       ];
@@ -43,7 +40,6 @@ final class HomeState extends Equatable {
     List<String>? filters,
     int? index,
     List<MealCategory>? mealCategoryModel,
-    double? ratingStars,
     ViewStatus? status,
     String? errorMessage,
   }) {
@@ -54,7 +50,6 @@ final class HomeState extends Equatable {
       meals: meals ?? this.meals,
       cardIndexHome: cardIndexHome ?? this.cardIndexHome,
       index: index ?? this.index,
-      ratingStars: ratingStars ?? this.ratingStars,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
     );

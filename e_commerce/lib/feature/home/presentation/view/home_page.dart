@@ -57,12 +57,12 @@ class _HomePageState extends State<HomePage> with HomeMixin {
                     state: state,
                   ),
                   const VerticalSpace.small(),
-                  HomePageBestSallerRow(
+                  HomePageBestSailerRow(
                     image: image,
                     randomIndices: randomIndices,
                     state: state,
                   ),
-                  VerticalSpace.small(),
+                  const VerticalSpace.small(),
                   HomePageGroceriesRow(
                     image: image,
                     randomIndex: randomIndices,

@@ -8,31 +8,10 @@ sealed class SearchEvent extends Equatable {
 }
 
 class FetchSearchMeals extends SearchEvent {
-  final String searchQuery;
-  FetchSearchMeals(
+  const FetchSearchMeals(
     this.searchQuery,
   );
+  final String searchQuery;
+  @override
   List<Object> get props => [searchQuery];
-}
-
-final class SearchMealsLoding extends SearchState {
-  SearchMealsLoding();
-}
-
-final class SearchMealsLoaded extends SearchState {
-  final List<MealModel> meals;
-
-  SearchMealsLoaded(this.meals);
-
-  @override
-  List<Object> get props => [meals];
-}
-
-final class SearchMealsError extends SearchState {
-  final String message;
-
-  SearchMealsError(this.message);
-
-  @override
-  List<Object> get props => [message];
 }

@@ -6,7 +6,6 @@ class MealCategoryModel {
   final List<MealCategory> meals;
 
   factory MealCategoryModel.fromJson(Map<String, dynamic> json) {
-    // JSON'dan gelen "meals" anahtarının bir liste olduğundan emin olun
     final mealsJson = json["meals"];
     if (mealsJson is List) {
       return MealCategoryModel(
@@ -16,7 +15,7 @@ class MealCategoryModel {
       );
     } else {
       return MealCategoryModel(
-        meals: [], // Eğer "meals" listesi yoksa boş bir liste dön
+        meals: [],
       );
     }
   }

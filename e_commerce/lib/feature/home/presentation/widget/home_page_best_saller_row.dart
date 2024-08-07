@@ -8,16 +8,16 @@ import 'package:e_commerce/product/widget/spacer/dynamic_vertical_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePageBestSallerRow extends StatelessWidget {
-  final HomeState state;
-  final List<int> randomIndices;
-  final List<String> image;
-  const HomePageBestSallerRow({
+class HomePageBestSailerRow extends StatelessWidget {
+  const HomePageBestSailerRow({
     required this.randomIndices,
     required this.state,
     super.key,
     required this.image,
   });
+  final HomeState state;
+  final List<int> randomIndices;
+  final List<String> image;
 
   @override
   Widget build(BuildContext context) {
