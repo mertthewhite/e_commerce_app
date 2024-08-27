@@ -84,3 +84,6 @@ flutter:
     - assets/lottie/
 
   # Fonts
+
+dependency_overrides:
+  carousel_slider: ^4.2.1  
