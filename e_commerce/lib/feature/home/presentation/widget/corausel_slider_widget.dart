@@ -3,7 +3,8 @@ import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
-import 'package:e_commerce/product/widget/custom_carousel.dart';
+import 'package:e_commerce/product/widget/custom_carousel.dart'
+    as flutter_carousel;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +22,7 @@ class CorauselSliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSliderWidget(
+    return flutter_carousel.CarouselSliderWidget(
       controller: controller,
       items: items.map((item) {
         return ClipRRect(
