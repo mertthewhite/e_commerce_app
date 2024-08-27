@@ -1,24 +1,21 @@
-import 'package:carousel_slider/carousel_controller.dart' as flutter_carousel;
+import 'package:carousel_slider/carousel_controller.dart' as carousel_slider;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/product/extensions/context_extensions.dart';
 import 'package:e_commerce/product/utility/constants/color_constants.dart';
 import 'package:e_commerce/product/utility/constants/number_constants.dart';
 import 'package:e_commerce/product/widget/custom_carousel.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 class CorauselSliderWidget extends StatelessWidget {
   final List<String> items;
-  final flutter_carousel.CarouselController controller;
+  final carousel_slider.CarouselController controller;
 
   CorauselSliderWidget({
     required this.controller,
     required this.items,
     Key? key,
   }) : super(key: key);
-
-//dışarı al
 
   @override
   Widget build(BuildContext context) {
