@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:e_commerce/feature/explore/presantation/bloc/explore_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
@@ -16,7 +15,6 @@ mixin HomeMixin on State<HomePage> {
     super.initState();
     _generateRandomIndices();
     context.read<ExploreBloc>().add(FetchExploreCategory());
-    controller = CarouselController();
   }
 
   final hiveManager = HiveDatabaseManager();
@@ -35,7 +33,6 @@ mixin HomeMixin on State<HomePage> {
     randomIndices = indicesSet.toList();
   }
 
-  late final CarouselController controller;
   List<String> items = [
     Assets.images.banner2.path,
     Assets.images.banner3.path,
