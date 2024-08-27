@@ -1,6 +1,5 @@
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/mixin/home_mixin.dart';
-import 'package:e_commerce/feature/home/presentation/widget/corausel_sliderr_widget.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_best_saller_row.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_exclusive_offer_row.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_groceries_row.dart';
@@ -35,20 +34,6 @@ class _HomePageState extends State<HomePage> with HomeMixin {
                   const VerticalSpace.small(),
                   const HomePageSearchBar(),
                   const VerticalSpace.small(),
-                  Stack(children: [
-                    CorauselSliderWidget(
-                      controller: controller,
-                      items: items,
-                    ),
-                    Positioned(
-                      left: NumberConstants.zero,
-                      right: NumberConstants.zero,
-                      bottom: NumberConstants.five,
-                      child: CarouselSliderBulletWidget(
-                        state: state,
-                      ),
-                    ),
-                  ]),
                   const VerticalSpace.small(),
                   const HomePageOfferTitle(),
                   const VerticalSpace.small(),
