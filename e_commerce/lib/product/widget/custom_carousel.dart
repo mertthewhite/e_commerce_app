@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
@@ -16,7 +17,8 @@ class CarouselSliderWidget extends StatelessWidget {
   final bool autoPlay;
   final Duration autoPlayInterval;
   final Duration autoPlayAnimationDuration;
-  final CarouselController controller;
+  final CarouselController
+      controller; // Bu sınıfı carousel_slider'dan import edin
 
   @override
   Widget build(BuildContext context) {
