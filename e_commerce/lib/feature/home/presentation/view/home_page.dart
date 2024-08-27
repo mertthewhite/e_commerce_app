@@ -1,6 +1,6 @@
 import 'package:e_commerce/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:e_commerce/feature/home/presentation/view/mixin/home_mixin.dart';
-import 'package:e_commerce/feature/home/presentation/widget/corausel_slider_widget.dart';
+import 'package:e_commerce/feature/home/presentation/widget/corausel_sliderr_widget.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_best_saller_row.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_exclusive_offer_row.dart';
 import 'package:e_commerce/feature/home/presentation/widget/home_page_groceries_row.dart';
