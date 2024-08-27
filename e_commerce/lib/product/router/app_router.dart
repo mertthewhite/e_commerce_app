@@ -5,7 +5,6 @@ import 'package:e_commerce/feature/bottom_nav/view/bottom_nav_page.dart';
 import 'package:e_commerce/feature/cart/presantation/view/subView/cart_page_accepted.dart';
 import 'package:e_commerce/feature/explore/presantation/view/explore_page.dart';
 import 'package:e_commerce/feature/explore/presantation/view/subview/explore_category_detail_page.dart';
-import 'package:e_commerce/feature/explore/presantation/view/subview/explore_search.dart';
 import 'package:e_commerce/feature/favourite/presantation/view/favourite_page.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/presentation/view/home_page.dart';
@@ -205,34 +204,10 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: '/explore_meal_search_page',
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-            child: ExploreMealSearchPage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = Offset(0.0, 1.0);
-              const end = Offset.zero;
-              const curve = Curves.fastEaseInToSlowEaseOut;
-
-              var tween = Tween(begin: begin, end: end);
-              var curvedAnimation = CurvedAnimation(
-                parent: animation,
-                curve: curve,
-              );
-              var offsetAnimation = tween.animate(curvedAnimation);
-
-              return SlideTransition(position: offsetAnimation, child: child);
-            },
-          );
-        },
-      ),
-      GoRoute(
         path: '/explore_category_detail_page',
         builder: (context, state) {
-          final selectedFilters = state.extra as List<String>?;
-          return ExploreCategoryDetailPage(
-              selectedFilters: selectedFilters ?? []);
+          final selectedFilters = state.extra as List<String?>;
+          return ExploreCategoryDetailPage(selectedFilters: selectedFilters);
         },
       ),
     ],

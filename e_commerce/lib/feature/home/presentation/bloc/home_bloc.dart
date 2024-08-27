@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/home/data/models/category/category_model.dart';
 import 'package:e_commerce/feature/home/data/models/meal/meal_model.dart';
 import 'package:e_commerce/feature/home/data/remote/product_remote_datasource.dart';
+import 'package:e_commerce/feature/home/domain/usecases/uc_get_meal.dart';
+import 'package:e_commerce/product/errors/failures/failures.dart';
 import 'package:e_commerce/product/utility/enums/view_status.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,53 +13,66 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this.repository) : super(const HomeState()) {
-    on<FetchAllMeals>(_onFetchAllMeals);
+  HomeBloc(this._ucGetMeal) : super(const HomeState()) {
     on<CardIndexHome>(_cardIndexHome);
     on<SearchQueryChanged>(_searchQueryChanged);
     on<FilterMealsEvent>(_updateFAllProductFilter);
     on<UpdatePlusIndex>(_updatePlusIndex);
     on<UpdateMinusIndex>(_updateMinusIndex);
     on<UpdateClearIndex>(_updateIndex);
+    on<FecthNewMeal>(fetchMeal);
   }
 
-  final GeneralRepository repository;
+  final UCGetMeal _ucGetMeal;
 
-  Future<void> _onFetchAllMeals(
-    FetchAllMeals event,
+  Future<void> fetchMeal(
+    FecthNewMeal event,
     Emitter<HomeState> emit,
   ) async {
     emit(state.copyWith(
       status: ViewStatus.loading,
+      errorMessage: '',
     ));
-    try {
-      print('Fetching meals');
-      final meals = await repository.fetchAllMeals();
-      if (meals.isEmpty) {
-        emit(
-          state.copyWith(
-            status: ViewStatus.failure,
-            errorMessage: 'No meals found.',
-          ),
-        );
-      } else {
+
+    final response = await _ucGetMeal.getMeal();
+
+    response.fold(
+      (failure) {
+        if (failure is NetworkFailure) {
+          emit(
+            state.copyWith(
+              errorMessage: 'Network Failure',
+              status: ViewStatus.failure,
+            ),
+          );
+        } else if (failure is NullResponseFailure) {
+          emit(
+            state.copyWith(
+              errorMessage: 'Null Response Failure',
+              status: ViewStatus.failure,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              errorMessage: 'Unknown Failure',
+              status: ViewStatus.failure,
+            ),
+          );
+        }
+      },
+      (meal) {
+        print(meal);
         emit(
           state.copyWith(
             status: ViewStatus.success,
-            meals: meals,
-            errorMessage: "success",
+            errorMessage: '',
+            meals: meal,
           ),
         );
-      }
-    } catch (e) {
-      print('Error fetching meals');
-      emit(
-        state.copyWith(
-          status: ViewStatus.failure,
-          errorMessage: 'Error fetching meals',
-        ),
-      );
-    }
+        print(state.meals);
+      },
+    );
   }
 
   void _cardIndexHome(

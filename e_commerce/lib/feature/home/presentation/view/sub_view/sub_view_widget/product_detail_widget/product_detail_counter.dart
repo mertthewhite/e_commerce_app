@@ -1,11 +1,11 @@
 part of '../../product_detail_page.dart';
 
 class ProductDetailCounter extends StatelessWidget {
-  final MealModel meal;
   const ProductDetailCounter({
-    super.key,
     required this.meal,
+    super.key,
   });
+  final MealModel meal;
 
   @override
   Widget build(BuildContext context) {

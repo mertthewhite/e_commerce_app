@@ -7,12 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 mixin LandingPageMixin on State<LandingPage> {
   @override
-  void initState() {
+  initState() {
     super.initState();
-    BlocProvider.of<HomeBloc>(context).add(FetchAllMeals());
-    BlocProvider.of<ExploreBloc>(context).add(FetchExploreCategory());
-    context.read<FavouriteBloc>().add(LoadFavouritesEvent());
-    context.read<ExploreBloc>().add(FetchExploreCategory());
+    context.read<FavouriteBloc>().add(const LoadFavouritesEvent());
+    context.read<HomeBloc>().add(const FecthNewMeal());
+    fecthMeal();
+  }
+
+  Future<void> fecthMeal() async {
+    print(context.read<HomeBloc>().state.meals);
+    print("fetching meals");
   }
 
   final ValueNotifier<bool> navigatedNotifier = ValueNotifier<bool>(false);

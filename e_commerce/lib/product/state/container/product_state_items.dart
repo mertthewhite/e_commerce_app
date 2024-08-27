@@ -11,7 +11,6 @@ import 'package:e_commerce/product/state/container/product_state_container.dart'
 
 final class ProductStateItems {
   const ProductStateItems._();
-  //static ProductCache get productCache => ProductContainer.read<ProductCache>();
   static AppRouter get appRouter => CustomLocator.read<AppRouter>();
   static HomeBloc get homeBloc => CustomLocator.read<HomeBloc>();
   static ExploreBloc get exploreBloc => CustomLocator.read<ExploreBloc>();

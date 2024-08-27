@@ -40,12 +40,12 @@ class ExplorePageCategorCard extends StatelessWidget {
           children: [
             IngredientThumbnail(
               cart: false,
-              ingredient: state.mealCategoryModel[index].strCategory,
+              ingredient: state.mealCategoryModel[index].strCategory ?? '',
               bigImage: false,
               index: index,
             ),
             Text(
-              state.mealCategoryModel[index].strCategory,
+              state.mealCategoryModel[index].strCategory ?? '',
               style: context.textTheme.bodyMedium,
             ),
           ],

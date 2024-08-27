@@ -9,7 +9,7 @@ final class ExploreState extends Equatable {
 
   final ViewStatus status;
   final String errorMessage;
-  final List<MealCategory> mealCategoryModel;
+  final List<MealCategoryNameModel> mealCategoryModel;
 
   @override
   List<Object?> get props => [
@@ -21,7 +21,7 @@ final class ExploreState extends Equatable {
   ExploreState copyWith({
     ViewStatus? status,
     String? errorMessage,
-    List<MealCategory>? mealCategoryModel,
+    List<MealCategoryNameModel>? mealCategoryModel,
   }) {
     return ExploreState(
       status: status ?? this.status,

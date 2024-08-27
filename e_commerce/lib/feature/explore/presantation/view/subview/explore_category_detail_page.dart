@@ -12,7 +12,7 @@ class ExploreCategoryDetailPage extends StatefulWidget {
     required this.selectedFilters,
     super.key,
   });
-  final List<String> selectedFilters;
+  final List<String?> selectedFilters;
 
   @override
   State<ExploreCategoryDetailPage> createState() =>
@@ -29,7 +29,7 @@ class _ExploreCategoryDetailPageState extends State<ExploreCategoryDetailPage> {
               widget.selectedFilters.any((filter) =>
                   meal.strCategory
                       ?.toLowerCase()
-                      .contains(filter.toLowerCase()) ??
+                      .contains(filter?.toLowerCase() as Pattern) ??
                   false);
         }).toList();
 

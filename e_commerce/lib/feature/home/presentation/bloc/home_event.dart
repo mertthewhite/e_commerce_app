@@ -103,3 +103,7 @@ class UpdateProductRatingEvent extends HomeEvent {
   final MealModel meal;
   final double newRating;
 }
+
+class FecthNewMeal extends HomeEvent {
+  const FecthNewMeal();
+}

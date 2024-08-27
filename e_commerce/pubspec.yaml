@@ -50,6 +50,11 @@ dependencies:
   easy_localization: ^3.0.7
   connectivity_plus: ^6.0.3
   json_annotation: ^4.8.0
+  dio: ^5.5.0+1
+  dio_smart_retry: ^6.0.0
+  pretty_dio_logger: ^1.4.0
+  dartz: ^0.10.1
+  platform_device_id: ^1.0.1
 
 dev_dependencies:
   # Flutter Test

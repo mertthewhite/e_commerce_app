@@ -35,7 +35,9 @@ class ApplicationInitialize {
   }
 
   Future<void> _productEnvironmentWithContainer() async {
-    await CustomLocator.locateServices();
+    await CustomLocator.locateServices(
+      baseUrl: 'https://www.themealdb.com/api/json/v1/1/',
+    );
   }
 
   Future<void> _setRotation() async {
